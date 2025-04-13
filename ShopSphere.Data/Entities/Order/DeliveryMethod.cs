@@ -1,6 +1,10 @@
 ﻿namespace ShopSphere.Data.Entities.Order
 {
-    public class DeliveryMethod
+    public class DeliveryMethod :BaseEntity
     {
+        public string ShortName { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string DeliveryTime { get; set; } = null!;
+        public decimal Price { get; set; }
     }
 }

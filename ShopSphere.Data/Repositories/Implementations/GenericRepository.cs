@@ -2,6 +2,7 @@
 using ShopSphere.Data;
 using ShopSphere.Data.Context;
 using ShopSphere.Data.Repositories.Interfaces;
+using ShopSphere.Data.Specification;
 
 
 namespace ShopSphere.Data.Repositories.Implementations
@@ -25,6 +26,17 @@ namespace ShopSphere.Data.Repositories.Implementations
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
+
+        public async Task<IReadOnlyList<T>> GetAllWihSpecAsync(IBaseSpecification<T> spec)
+        {
+            return await ApplyQuery(spec).ToListAsync();
+        }
+
+
+        public async Task<T> GetByIdWihSpecAsync(IBaseSpecification<T> spec)
+        {
+            return await ApplyQuery(spec).FirstOrDefaultAsync();
+        }
         public async Task AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -42,7 +54,10 @@ namespace ShopSphere.Data.Repositories.Implementations
             _dbContext.Set<T>().Remove(entity);
         }
 
-
+        private IQueryable<T> ApplyQuery(IBaseSpecification<T> spec)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_dbContext.Set<T>(), spec);
+        }
 
 
     }

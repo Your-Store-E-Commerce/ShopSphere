@@ -5,6 +5,7 @@ using ShopSphere.Data.Repositories.Implementations;
 using ShopSphere.Data.Repositories.Interfaces;
 using ShopSphere.Data.UnitOfWork;
 using ShopSphere.Web.Helper;
+using StackExchange.Redis;
 
 namespace ShopSphere.Web
 {
@@ -21,6 +22,12 @@ namespace ShopSphere.Web
 
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
          );
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>(Service =>
+            {
+                var conect = builder.Configuration.GetConnectionString("Redis");
+                return ConnectionMultiplexer.Connect(conect);
+            });
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
