@@ -2,13 +2,13 @@
 
 namespace ShopSphere.Data.Specification
 {
-    internal class Specification<T> : ISpecification<T> where T : BaseEntity
+    public class BaseSpecification<T> : IBaseSpecification<T> where T : BaseEntity
     {
-        public Specification()
+        public BaseSpecification()
         {
 
         }
-        public Specification(Expression<Func<T, bool>> criteria)
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }
