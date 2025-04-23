@@ -14,12 +14,12 @@ namespace ShopSphere.Web.Controllers
         {
             _productServices = productServices;
         }
-        public async Task<IActionResult> IndexAsync()
-        {
-          var items= await _productServices.GetProductsAsync();
+        //public async Task<IActionResult> IndexAsync()
+        //{
+        //  var items= await _productServices.GetProductsAsync();
            
-            return View(items);
-        }   
+        //    return View(items);
+        //}   
         
         public async Task<IActionResult> IndexAsync(int id)
         {

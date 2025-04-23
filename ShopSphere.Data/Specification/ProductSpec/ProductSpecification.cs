@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShopSphere.Data.Specification.ProductSpec
 {
-    internal class ProductSpecification : BaseSpecification<Product>
+    public class ProductSpecification : BaseSpecification<Product>
     {
         public ProductSpecification(ProductSpecParams specParams):
             base ( P=>

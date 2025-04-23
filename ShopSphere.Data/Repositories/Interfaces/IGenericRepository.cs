@@ -10,7 +10,7 @@ namespace ShopSphere.Data.Repositories.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IReadOnlyList<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(int id);
 
         Task<IReadOnlyList<TEntity>> GetAllWihSpecAsync(IBaseSpecification<TEntity> spec);

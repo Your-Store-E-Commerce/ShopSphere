@@ -12,7 +12,7 @@ namespace ShopSphere.Services.Interfaces
         Task<Order?> CreateOrderAsync(
           string basketId, int deliveryMethod, string BuyerEmail, string ShippingAddress);
         Task<IReadOnlyList<Order>> GetOrderForUser(string BuyerEmail);
-        Task<Order> GetOrderForUserById(int orderId, string BuyerEmail);
+        //Task<Order> GetOrderForUserById(int orderId, string BuyerEmail);
 
         Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethod();
     }

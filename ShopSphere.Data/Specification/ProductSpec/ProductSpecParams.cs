@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShopSphere.Data.Specification.ProductSpec
 {
-    internal class ProductSpecParams
+    public class ProductSpecParams
     {
         
             public string? sort { get; set; }

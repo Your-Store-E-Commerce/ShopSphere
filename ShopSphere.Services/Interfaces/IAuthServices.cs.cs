@@ -8,5 +8,6 @@ namespace ShopSphere.Services.Interfaces
 {
     public interface IAuthServices
     {
+
     }
 }
