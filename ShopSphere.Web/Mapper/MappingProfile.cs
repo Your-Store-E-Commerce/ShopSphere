@@ -12,6 +12,7 @@ namespace ShopSphere.Web.Mapper
         {
             CreateMap<CustomerBasketViewModel, CustomerBasket>().ReverseMap();
             CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
+            CreateMap<BasketItem, BasketItemViewModel>().ReverseMap();
         }
     }
 }

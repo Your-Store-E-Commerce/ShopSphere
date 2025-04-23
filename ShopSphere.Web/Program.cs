@@ -4,7 +4,10 @@ using ShopSphere.Data.Interfaces;
 using ShopSphere.Data.Repositories.Implementations;
 using ShopSphere.Data.Repositories.Interfaces;
 using ShopSphere.Data.UnitOfWork;
+using ShopSphere.Services.Implementations;
+using ShopSphere.Services.Interfaces;
 using ShopSphere.Web.Helper;
+using ShopSphere.Web.Mapper;
 using StackExchange.Redis;
 
 namespace ShopSphere.Web
@@ -31,14 +34,23 @@ namespace ShopSphere.Web
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            builder.Services.AddScoped(typeof(IUnitOfWork) , typeof(UnitOfWork));   
+            builder.Services.AddScoped(typeof(IUnitOfWork) , typeof(UnitOfWork)); 
+            builder.Services.AddScoped(typeof(IBasketRepository) , typeof(BasketRepository));
+            builder.Services.AddScoped(typeof(IPaymentServices), typeof(PaymentServices));
+            builder.Services.AddScoped(typeof(IOrderServices) , typeof(OrderServices));
+            builder.Services.AddScoped(typeof(IProductsServices), typeof(ProductsServices));
+            builder.Services.AddScoped(typeof(IBasketServices), typeof(BasketServices));
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
             var app = builder.Build();
 
             await DatabaseInitializer.InitializeDatabaseAsync(app);
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+			await ApplySeeding.SeedAsync(app);
+		
+			// Configure the HTTP request pipeline.
+			if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.

@@ -10,7 +10,8 @@ namespace ShopSphere.Data.Repositories.Interfaces
     public interface IBasketRepository
     {
         Task<CustomerBasket?> GetBasketAsync(string id);
-        Task<CustomerBasket?> UpdateBasketAsync(CustomerBasket basket);
+        Task<CustomerBasket?> UpdateBasketAsync(string basketId, List<BasketItem> items);
+        Task<CustomerBasket?> AddItemBasketAsync(string basketId, BasketItem item);
         Task<bool> DeleteBasketAsync(string id);
     }
 }

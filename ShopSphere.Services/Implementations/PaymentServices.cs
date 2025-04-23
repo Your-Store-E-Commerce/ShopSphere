@@ -5,6 +5,7 @@ using ShopSphere.Data.Entities.Order;
 using ShopSphere.Data.Interfaces;
 using ShopSphere.Data.Repositories.Interfaces;
 using ShopSphere.Data.Specification.OderSpec;
+using ShopSphere.Services.Interfaces;
 using Stripe;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace ShopSphere.Services.Implementations
 {
-    public class PaymentServices
+    public class PaymentServices : IPaymentServices
     {
 
         private readonly IConfiguration _configuration;
@@ -85,7 +86,7 @@ namespace ShopSphere.Services.Implementations
 
             }
 
-            await _basketRepo.UpdateBasketAsync(basket);
+           await _basketRepo.UpdateBasketAsync(basket.Id, basket.Items);
 
             return basket;
         }

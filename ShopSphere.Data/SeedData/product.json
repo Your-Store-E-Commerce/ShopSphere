@@ -1,0 +1,74 @@
+[
+  {
+
+    "Name": "iPhone 14 Pro",
+    "Description": "Apple smartphone with A16 Bionic chip and ProMotion display.",
+    "Price": 999.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=1",
+    "TypeId": 1,
+    "BrandId": 1
+  },
+  {
+
+    "Name": "Samsung Galaxy S23",
+    "Description": "Latest Samsung smartphone with powerful performance and display.",
+    "Price": 899.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=2",
+    "TypeId": 1,
+    "BrandId": 2
+  },
+  {
+
+    "Name": "MacBook Air M2",
+    "Description": "Apple laptop with M2 chip and lightweight design.",
+    "Price": 1249.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=3",
+    "TypeId": 2,
+    "BrandId": 1
+  },
+  {
+
+    "Name": "Lenovo IdeaPad 5",
+    "Description": "Affordable Lenovo laptop with AMD Ryzen processor.",
+    "Price": 649.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=4",
+    "TypeId": 2,
+    "BrandId": 3
+  },
+  {
+
+    "Name": "iPad Pro 11\"",
+    "Description": "Powerful tablet with Apple M2 chip and Liquid Retina display.",
+    "Price": 1049.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=5",
+    "TypeId": 3,
+    "BrandId": 1
+  },
+  {
+
+    "Name": "Sony WH-1000XM5",
+    "Description": "Industry-leading noise canceling headphones from Sony.",
+    "Price": 379.99,
+    "PictureUrl": "https://picsum.photos/200/300?random=6",
+    "TypeId": 4,
+    "BrandId": 5
+  },
+    {
+       
+        "Name": "HP 27\" Monitor",
+        "Description": "Full HD monitor with wide viewing angles and sleek design.",
+        "Price": 229.99,
+        "PictureUrl": "https://picsum.photos/200/300?random=7",
+        "TypeId": 5,
+        "BrandId": 4
+    },
+    {
+      
+        "Name": "Anker Power Bank 20000mAh",
+        "Description": "High-capacity power bank with fast charging support.",
+        "Price": 49.99,
+        "PictureUrl": "https://picsum.photos/200/300?random=8",
+        "TypeId": 6,
+        "BrandId": 6
+    }
+]

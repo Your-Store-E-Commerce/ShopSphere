@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ShopSphere.Services.Implementations
 {
-    public class OrderServices
+    public class OrderServices :IOrderServices
     {
         private readonly IBasketRepository _basket;
         private readonly IUnitOfWork _unitOfWork;
@@ -98,5 +98,34 @@ namespace ShopSphere.Services.Implementations
             return order;
 
         }
+
+        public async Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethod()
+        {
+            var result = await _unitOfWork.Repository<DeliveryMethod>().GetAllAsync();
+            return result;
+        }
+
+        public async Task<IReadOnlyList<Order>> GetOrderForUser(string BuyerEmail)
+        {
+            var orderRepo = _unitOfWork.Repository<Order>();
+
+            var spec = new OrderSpecification(BuyerEmail);
+
+            var orders = await orderRepo.GetAllWihSpecAsync(spec);
+
+            return orders;
+
+        }
+
+        //public Task<Order> GetOrderForUserById(int orderId, string BuyerEmail)
+        //{
+        //    var orderRepo = _unitOfWork.Repository<Order>();
+
+        //    var spec = new OrderSpecification(orderId, BuyerEmail);
+
+        //    var order = orderRepo.GetByIdWihSpecAsync(spec);
+
+        //    return order;
+        //}
     }
 }
