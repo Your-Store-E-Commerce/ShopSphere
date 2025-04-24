@@ -12,7 +12,8 @@ namespace ShopSphere.Services.Interfaces
     {
         Task<IReadOnlyList<Product>> GetProductsAsync(ProductSpecParams productSpec);
         Task<Product> GetProductByIdAsync(int id);
-      
+        Task<IReadOnlyList<Product>> GetProductsAsync();
 
-    }
+
+	}
 }

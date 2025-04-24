@@ -16,6 +16,7 @@ namespace ShopSphere.Data.Context
     {
 		public static async Task ApplySeedingAsync(ShopSphere_DbContext context)
 		{
+
 		
 			if (!context.ProductBrands.Any())
 			{

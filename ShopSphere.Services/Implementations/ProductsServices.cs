@@ -24,6 +24,13 @@ namespace ShopSphere.Services.Implementations
           var spec = new ProductSpecification (productSpec);
           var products= _unitOfWork.Repository<Product>().GetAllWihSpecAsync(spec);
             return products;
+        } 
+        
+        public Task<IReadOnlyList<Product?>> GetProductsAsync()
+        {
+         
+          var products= _unitOfWork.Repository<Product>().GetAllAsync();
+            return products;
         }
 
         public Task<Product> GetProductByIdAsync(int id)
