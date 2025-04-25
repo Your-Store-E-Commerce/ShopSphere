@@ -20,5 +20,8 @@ namespace ShopSphere.Web.Models.Basket
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Quantity must be at least one !!")]
         public int Quantity { get; set; }
-    }
+
+
+		public decimal TotalPrice => Price * Quantity;
+	}
 }
