@@ -5,7 +5,7 @@
 namespace ShopSphere.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class seedingData : Migration
+    public partial class SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

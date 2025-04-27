@@ -12,8 +12,8 @@ using ShopSphere.Data.Context;
 namespace ShopSphere.Data.Migrations
 {
     [DbContext(typeof(ShopSphere_DbContext))]
-    [Migration("20250422232536_seedingData")]
-    partial class seedingData
+    [Migration("20250427132159_SeedData")]
+    partial class SeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

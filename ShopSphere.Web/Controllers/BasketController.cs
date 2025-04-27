@@ -84,33 +84,32 @@ namespace ShopSphere.Web.Controllers
 
 
         }
-        [HttpPost("UpdateBasketItem")]
-        public async Task<IActionResult> UpdateBasket(string basketId, List<BasketItemViewModel> updatedItems)
-        {
-            if (string.IsNullOrEmpty(basketId) || updatedItems == null || !updatedItems.Any())
-                return BadRequest("Invalid request");
+       
 
-            var items = _mapper.Map<List<BasketItem>>(updatedItems);
-            var updatedBasket = await _basketService.UpdateBasketAsync(basketId, items);
 
-            if (updatedBasket == null)
-                return BadRequest("Failed to update basket");
+      
 
-            return RedirectToAction("Index", new { basketId });
-        }
 
-        [HttpDelete]
+       
+        [HttpPost]
         public async Task<IActionResult> DeleteBasket(string basketId)
         {
             if (string.IsNullOrEmpty(basketId))
-                return BadRequest("Basket ID is required");
+                return BadRequest("Invalid Basket ID");
 
-            var deleted = await _basketService.DeleteBasketAsync(basketId);
-            if (!deleted) return NotFound();
+          
+            var result = await _basketService.DeleteBasketAsync(basketId);
 
-            HttpContext.Session.Remove("BasketId");
-            return Ok();
+            if (!result)
+                return BadRequest("Failed to delete basket");
+
+           
+            return RedirectToAction(nameof(Index));
         }
+
+
+      
+
 
         private string GetOrCreateBasketId()
         {
@@ -127,6 +126,41 @@ namespace ShopSphere.Web.Controllers
 
 
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromBasket(string productId)
+        {
+            var basketId = HttpContext.Session.GetString("BasketId");
+
+            if (string.IsNullOrEmpty(basketId))
+                return BadRequest("Basket ID is missing");
+
+            var removed = await _basketService.RemoveItemFromBasketAsync(basketId, productId);
+
+            if (!removed)
+                return NotFound("Product not found in basket");
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+        [HttpPost("UpdateBasketItem")]
+        public async Task<IActionResult> UpdateBasket(string basketId, int productId, int quantity)
+        {
+            if (string.IsNullOrEmpty(basketId) || productId <= 0 || quantity <= 0)
+                return BadRequest("Invalid request");
+
+            // تحديث الكمية باستخدام الميثود في BasketServices
+            var updatedBasket = await _basketService.UpdateItemQuantityAsync(basketId, productId, quantity);
+
+            if (updatedBasket == null)
+                return BadRequest("Failed to update basket");
+
+            return RedirectToAction("Index", new { basketId });
+        }
+  
     }
 }
 

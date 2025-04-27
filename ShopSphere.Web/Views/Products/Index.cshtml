@@ -42,7 +42,8 @@
                     <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item @product.TypeName.ToLower()">
                         <div class="block2">
                             <div class="block2-pic hov-img0">
-                                <img src="@product.PictureUrl" alt="IMG-PRODUCT" />
+                                <img src="@Url.Content(product.PictureUrl)" alt="IMG-PRODUCT" style="max-width: 100%; height: auto;" />
+
                                 <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                     Quick View
@@ -58,6 +59,8 @@
                                 <div class="block2-txt-child2 flex-r p-t-3">
                                     <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
                                         <img class="icon-heart1 dis-block trans-04" src="@Url.Content("~/images/icons/icon-heart-01.png")" alt="ICON">
+                                        <img class="icon-heart2 dis-block trans-04" src="@Url.Content("~/images/icons/icon-heart-02.png")" alt="ICON">
+                                  
                                     </a>
                                 </div>
                             </div>

@@ -74,9 +74,10 @@
 											</div>
 										</div>
 
-										<button type="submit" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+										<button type="button" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 add-to-cart-btn">
 											Add to Cart
 										</button>
+
 									</div>
 								</div>
 							</div>
@@ -111,3 +112,50 @@
 	</div>
 
 </section>
+
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			// عند الضغط على زر "Add to Cart"
+			$('.add-to-cart-btn').on('click', function () {
+				// الحصول على قيم الـ productId و quantity
+				var productId = $(this).closest('form').find('input[name="productId"]').val();
+				var quantity = $(this).closest('form').find('input[name="quantity"]').val();
+
+				// إرسال طلب AJAX إلى الـ Controller لإضافة المنتج إلى السلة
+				$.ajax({
+					url: '@Url.Action("AddItemToBasket", "Basket")', // المسار إلى AddItemToBasket
+					method: 'POST',
+					data: {
+						productId: productId,
+						quantity: quantity
+					},
+					success: function (response) {
+						// تحديث العدد في السلة
+						$('.notify-count').text(response.cartItemCount);  // تحديث الرقم في السلة
+
+						// عرض إشعار Toastr باللون الأخضر
+						toastr.success('تم إضافة المنتج بنجاح إلى السلة', 'نجاح', {
+							closeButton: true,
+							progressBar: true,
+							timeOut: 3000,
+							positionClass: 'toast-top-right',
+							toastClass: 'toast-success'
+						});
+					},
+					error: function () {
+						toastr.error('حدث خطأ أثناء إضافة المنتج إلى السلة', 'خطأ', {
+							closeButton: true,
+							progressBar: true,
+							timeOut: 3000,
+							positionClass: 'toast-top-right',
+							toastClass: 'toast-error'
+						});
+					}
+				});
+			});
+		});
+	</script>
+}
+
