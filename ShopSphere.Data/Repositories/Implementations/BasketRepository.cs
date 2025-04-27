@@ -107,6 +107,32 @@ namespace ShopSphere.Data.Repositories.Implementations
 		{
 			return await _database.KeyDeleteAsync(id);
 		}
-	}
+
+
+
+        public async Task<bool> RemoveItemFromBasketAsync(string basketId, string productId)
+        {
+            if (string.IsNullOrWhiteSpace(basketId))
+                throw new ArgumentNullException(nameof(basketId));
+
+            if (string.IsNullOrWhiteSpace(productId))
+                throw new ArgumentNullException(nameof(productId));
+
+            var basket = await GetBasketAsync(basketId);
+
+            if (basket == null)
+                return false;
+
+            var itemToRemove = basket.Items.FirstOrDefault(i => i.Id == int.Parse(productId));
+            if (itemToRemove == null)
+                return false;
+
+            basket.Items.Remove(itemToRemove);
+
+            var updatedBasket = await UpdateBasketAsync(basketId, basket.Items);
+            return updatedBasket != null;
+        }
+   
+    }
 }
 

@@ -1,26 +1,8 @@
 [
-    {
-         
-        "Name": "Apple"
-    },
-    {
-       
-        "Name": "Samsung"
-    },
-  {
-  
-    "Name": "Lenovo"
-  },
-  {
-    
-    "Name": "HP"
-  },
-  {
-  
-    "Name": "Sony"
-  },
-  {
- 
-    "Name": "Anker"
-  }
+  { "Name": "Apple" },
+  { "Name": "Samsung" },
+  { "Name": "Lenovo" },
+  { "Name": "HP" },
+  { "Name": "Sony" },
+  { "Name": "Anker" }
 ]
