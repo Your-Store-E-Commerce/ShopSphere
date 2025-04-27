@@ -42,7 +42,12 @@ namespace ShopSphere.Web
             builder.Services.AddScoped(typeof(IBasketServices), typeof(BasketServices));
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+			builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // „œ… «‰ Â«¡ «·Ã·”…
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -67,6 +72,7 @@ namespace ShopSphere.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.UseSession();
 
             app.Run();
         }

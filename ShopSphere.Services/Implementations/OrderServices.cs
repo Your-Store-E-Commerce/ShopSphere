@@ -69,7 +69,7 @@ namespace ShopSphere.Services.Implementations
 
             if (existingOrder is not null)
             {
-                orderRepo.Delete(existingOrder);
+               await orderRepo.Delete(existingOrder.Id);
 
                 //Check Payment =>Amount => new Order
                 await _paymentServices.CrateOrUpdatePaymentIntent(basketId);
@@ -88,7 +88,7 @@ namespace ShopSphere.Services.Implementations
 
                 );
 
-            orderRepo.AddAsync(order);
+           await orderRepo.CreateAsync(order);
 
             //6.Save Database 
             var result = await _unitOfWork.CompleteAsync();

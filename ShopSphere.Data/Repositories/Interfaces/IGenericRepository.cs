@@ -15,9 +15,9 @@ namespace ShopSphere.Data.Repositories.Interfaces
 
         Task<IReadOnlyList<TEntity>> GetAllWihSpecAsync(IBaseSpecification<TEntity> spec);
         Task<TEntity> GetByIdWihSpecAsync(IBaseSpecification<TEntity> spec);
-        Task AddAsync(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task CreateAsync(TEntity entity);
+        Task Update(int id ,TEntity entity);
+        Task Delete(int id);
 
     }
 }

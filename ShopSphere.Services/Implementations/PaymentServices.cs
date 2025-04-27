@@ -105,7 +105,7 @@ namespace ShopSphere.Services.Implementations
             else
                 order.orderStatus = OrderStatus.Failed;
 
-            orderRepo.Update(order);
+          await   orderRepo.Update(order.Id ,order);
             await _unitOfWork.CompleteAsync();
             return order;
         }

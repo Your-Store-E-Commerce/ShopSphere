@@ -1,21 +1,15 @@
 ﻿using ShopSphere.Data.Entities.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopSphere.Data.Specification.ProductSpec
 {
     public class ProductSpecification : BaseSpecification<Product>
     {
-        public ProductSpecification(ProductSpecParams specParams):
-            base ( P=>
-            (String.IsNullOrEmpty(specParams.Search) || (P.Name.Contains(specParams.Search)) ) && 
-            (!specParams.BrandId.HasValue) || (P.BrandId==specParams.BrandId.Value) &&
-            (!specParams.TypeId.HasValue)  || (P.TypeId==specParams.TypeId.Value) 
-           
-           )
+
+        public ProductSpecification(ProductSpecParams specParams) :
+ base(P =>
+    (string.IsNullOrEmpty(specParams.Search) || P.Name.ToLower().Contains(specParams.Search)) &&
+    (!specParams.BrandId.HasValue || P.BrandId == specParams.BrandId.Value) &&
+    (!specParams.TypeId.HasValue || P.TypeId == specParams.TypeId.Value))
         {
             Includes.Add(P => P.Brand);
             Includes.Add(P => P.Type);
@@ -38,7 +32,7 @@ namespace ShopSphere.Data.Specification.ProductSpec
                 OrderBy = o => o.Name;
 
 
-            ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize, specParams.PageSize);
+            //ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize, specParams.PageSize);
         }
 
         public ProductSpecification(int? id) : base(p => p.Id == id)

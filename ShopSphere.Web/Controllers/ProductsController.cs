@@ -27,9 +27,9 @@ namespace ShopSphere.Web.Controllers
 
 			var productsVM = _mapper.Map<IReadOnlyList<ProductViewModel>>(products);
 
+            ViewBag.CurrentTypeId = productSpec.TypeId;
 
-
-			return View(productsVM);
+            return View(productsVM);
         }
 
 		public async Task<IActionResult> Details(int? id)
@@ -47,6 +47,7 @@ namespace ShopSphere.Web.Controllers
 			return View(productVM);
 
 		}
+
 
 
 

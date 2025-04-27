@@ -8,16 +8,21 @@ using ShopSphere.Web.Models.Product;
 
 namespace ShopSphere.Web.Mapper
 {
-    public class MappingProfile :Profile 
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<Product, ProductViewModel>()
-		    .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Type.Name))
-			.ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name)).ReverseMap();
+            .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Type.Name))
+            .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name)).ReverseMap();
+          
             CreateMap<CustomerBasketViewModel, CustomerBasket>().ReverseMap();
-            CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
+
             CreateMap<BasketItem, BasketItemViewModel>().ReverseMap();
+
+
+            CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
+
         }
     }
 }

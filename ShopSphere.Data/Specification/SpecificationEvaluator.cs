@@ -14,18 +14,18 @@ namespace ShopSphere.Data.Specification
             var query = inputQuery;
 
             if (spec.Criteria is not null)
-                query = inputQuery.Where(spec.Criteria);
+                query = query.Where(spec.Criteria);
 
             if (spec.OrderBy is not null)
-                query = inputQuery.OrderBy(spec.OrderBy);
+                query = query.OrderBy(spec.OrderBy);
 
             else if (spec.OrderByDesc is not null)
-                query = inputQuery.OrderByDescending(spec.OrderByDesc);
+                query = query.OrderByDescending(spec.OrderByDesc);
 
             if (spec.IsPaginationEnable)
-                query = inputQuery.Skip(spec.Skip).Take(spec.Take);
+                query = query.Skip(spec.Skip).Take(spec.Take);
 
-            query = spec.Includes.Aggregate(inputQuery, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+            query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
 
             return query;
