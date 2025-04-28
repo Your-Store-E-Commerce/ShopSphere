@@ -33,22 +33,7 @@ namespace ShopSphere.Services.Implementations
             return await _basketRepo.DeleteBasketAsync(basketId);
         }
 
-		//public async Task<CustomerBasket> AddItemToBasketAsync(string basketId, BasketItem item)
-		//{
-		//    var basket = await _basketRepo.GetBasketAsync(basketId) ?? new CustomerBasket(basketId);
-
-		//    var existingItem = basket.Items.FirstOrDefault(i => i.Id == item.Id);
-		//    if (existingItem != null)
-
-		//        existingItem.Quantity += item.Quantity;
-
-		//    else
-
-		//        basket.Items.Add(item);
-
-
-		//    return await _basketRepo.UpdateBasketAsync(basketId, basket.Items) ?? basket;
-		//}
+		
 
 		public async Task<CustomerBasket> AddItemToBasketAsync(string basketId, BasketItem item)
 		{

@@ -25,7 +25,7 @@ namespace ShopSphere.Web.Controllers
         {
             if (string.IsNullOrEmpty(basketId))
             {
-                basketId = HttpContext.Session.GetString("BasketId");
+                basketId = HttpContext.Request.Cookies["BasketId"];
                 if (string.IsNullOrEmpty(basketId))
                     return RedirectToAction("Index", "Home");
             }
@@ -45,93 +45,102 @@ namespace ShopSphere.Web.Controllers
             if (quantity <= 0)
                 return BadRequest("Quantity must be greater than zero");
 
-            // التحقق من تهيئة الخدمة
             if (_productServices == null)
                 return StatusCode(500, "Service not available");
 
+            var basketId = Request.Cookies["BasketId"] ?? Guid.NewGuid().ToString();
 
-            // 1. الحصول على أو إنشاء BasketId
-            var basketId = HttpContext.Session.GetString("BasketId") ?? Guid.NewGuid().ToString();
-            HttpContext.Session.SetString("BasketId", basketId);
-
-            // 2. جلب المنتج والتحقق من وجوده
             var product = await _productServices.GetProductByIdAsync(productId);
             if (product == null) return NotFound("Product not found");
 
-            // 3. إنشاء BasketItem
             var basketItem = new BasketItem
             {
                 Id = product.Id,
                 ProductName = product.Name,
                 Price = product.Price,
                 PictureUrl = product.PictureUrl,
-                Brand = product.Brand?.Name ?? string.Empty, // استخدام null-coalescing
-                Type = product.Type?.Name ?? string.Empty,   // استخدام null-coalescing
+                Brand = product.Brand?.Name ?? string.Empty,
+                Type = product.Type?.Name ?? string.Empty,
                 Quantity = quantity
             };
 
-            // 4. إضافة العنصر للسلة
             var updatedBasket = await _basketService.AddItemToBasketAsync(basketId, basketItem);
             if (updatedBasket == null) return BadRequest("Failed to update basket");
 
-            // 5. إرجاع النتيجة
+            if (!Request.Cookies.ContainsKey("BasketId"))
+            {
+                Response.Cookies.Append("BasketId", basketId, new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(30),
+                    HttpOnly = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.Lax
+                });
+            }
+
+            // ✨ تحديث كوكي العداد
+            Response.Cookies.Append("BasketCount", updatedBasket.Items.Sum(i => i.Quantity).ToString(), new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30),
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            });
+
             return Ok(new
             {
                 success = true,
                 itemCount = updatedBasket.Items.Sum(i => i.Quantity),
                 basketId = updatedBasket.Id
             });
-
-
         }
-       
 
 
-      
 
-
-       
         [HttpPost]
         public async Task<IActionResult> DeleteBasket(string basketId)
         {
             if (string.IsNullOrEmpty(basketId))
                 return BadRequest("Invalid Basket ID");
 
-          
+
             var result = await _basketService.DeleteBasketAsync(basketId);
 
             if (!result)
                 return BadRequest("Failed to delete basket");
 
-           
+
             return RedirectToAction(nameof(Index));
         }
 
 
-      
 
 
-        private string GetOrCreateBasketId()
+        [HttpGet]
+        public async Task<IActionResult> GetBasket()
         {
-
-            var basketId = HttpContext.Session.GetString("BasketId");
-
+            var basketId = Request.Cookies["BasketId"];
             if (string.IsNullOrEmpty(basketId))
             {
-                basketId = Guid.NewGuid().ToString();
-                HttpContext.Session.SetString("BasketId", basketId);
+                return Ok(new CustomerBasket("empty"));
             }
 
-            return basketId;
-
-
+            var basket = await _basketService.GetBasketAsync(basketId);
+            return Ok(basket ?? new CustomerBasket(basketId));
         }
 
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromBasket(string productId)
         {
-            var basketId = HttpContext.Session.GetString("BasketId");
+            var basketId = Request.Cookies["BasketId"] ?? Guid.NewGuid().ToString();
+            Response.Cookies.Append("BasketId", basketId, new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(30),
+                HttpOnly = true,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            });
 
             if (string.IsNullOrEmpty(basketId))
                 return BadRequest("Basket ID is missing");
@@ -160,7 +169,7 @@ namespace ShopSphere.Web.Controllers
 
             return RedirectToAction("Index", new { basketId });
         }
-  
+
     }
 }
 
