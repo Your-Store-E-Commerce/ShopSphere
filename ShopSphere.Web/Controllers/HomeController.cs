@@ -1,24 +1,40 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ShopSphere.Services.Implementations;
+using ShopSphere.Services.Interfaces;
 using ShopSphere.Web.Models;
+using ShopSphere.Web.Models.Product;
 using System.Diagnostics;
 
 namespace ShopSphere.Web.Controllers
 {
     public class HomeController : Controller
+
+
+
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		private readonly IProductsServices _productServices;
+		private readonly IMapper _mapper;
+		private readonly ILogger<HomeController> _logger;
 
-        public IActionResult Privacy()
+
+		public HomeController(IProductsServices productServices, IMapper mapper,ILogger<HomeController> logger)
+		{
+			_productServices = productServices;
+			_mapper = mapper;
+			_logger = logger;
+		}  
+		
+		public async Task<IActionResult> Index()
+		{
+			var products = await _productServices.GetAllProductsAsync();
+			var productsVM = _mapper.Map<IReadOnlyList<ProductViewModel>>(products);
+			return View(productsVM);
+		}
+
+		public IActionResult Privacy()
         {
             return View();
         }

@@ -13,15 +13,17 @@ namespace ShopSphere.Web.Mapper
         public MappingProfile()
         {
             CreateMap<Product, ProductViewModel>()
-            .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Type.Name))
-            .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name)).ReverseMap();
-          
+                .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Type.Name))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand.Name))
+                .ReverseMap();
+
             CreateMap<CustomerBasketViewModel, CustomerBasket>().ReverseMap();
-
             CreateMap<BasketItem, BasketItemViewModel>().ReverseMap();
-
-
             CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
+
+            CreateMap<ProductType, ProductTypeViewModel>()
+             .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
+           .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Name));
 
         }
     }

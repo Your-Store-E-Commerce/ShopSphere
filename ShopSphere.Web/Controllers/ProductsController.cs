@@ -22,17 +22,35 @@ namespace ShopSphere.Web.Controllers
 		}
         public async Task<IActionResult> Index([FromQuery] ProductSpecParams productSpec)
         {
-			
-			var products = await _productServices.GetProductsAsync(productSpec);
 
-			var productsVM = _mapper.Map<IReadOnlyList<ProductViewModel>>(products);
+            var types = await _productServices.GetTypesAsync();
+
+            var products = await _productServices.GetProductsAsync(productSpec);
+
+            foreach (var type in types)
+            {
+                Console.WriteLine($"Type Id: {type.Id}, Type Name: {type.Name}");
+            }
+
+
+            var productsVM = _mapper.Map<IReadOnlyList<ProductViewModel>>(products);
+            var typesVM = _mapper.Map<IReadOnlyList<ProductTypeViewModel>>(types);
+
+
+            var viewModel = new ShopViewModel
+            {
+                Products = productsVM,
+                Types = typesVM
+            };
 
             ViewBag.CurrentTypeId = productSpec.TypeId;
 
-            return View(productsVM);
+            return View(viewModel);
         }
 
-		public async Task<IActionResult> Details(int? id)
+
+
+        public async Task<IActionResult> Details(int? id)
 		{
 
 			if (id == null)
