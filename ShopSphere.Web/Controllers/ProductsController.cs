@@ -5,6 +5,7 @@ using ShopSphere.Data.Entities.Data;
 using ShopSphere.Data.Interfaces;
 using ShopSphere.Data.Specification.ProductSpec;
 using ShopSphere.Data.UnitOfWork;
+using ShopSphere.Services.Implementations;
 using ShopSphere.Services.Interfaces;
 using ShopSphere.Web.Models.Product;
 
@@ -14,13 +15,18 @@ namespace ShopSphere.Web.Controllers
     {
         private readonly IProductsServices _productServices;
 		private readonly IMapper _mapper;
+		private readonly IBasketServices _basketServices;
 
-		public ProductsController(IProductsServices productServices ,IMapper mapper)
+		public ProductsController(IProductsServices productServices ,IMapper mapper,IBasketServices basketServices)
         {
             _productServices = productServices;
 			_mapper = mapper;
+			_basketServices = basketServices;
 		}
-        public async Task<IActionResult> Index([FromQuery] ProductSpecParams productSpec)
+
+
+
+		public async Task<IActionResult> Index([FromQuery] ProductSpecParams productSpec)
         {
 
             var types = await _productServices.GetTypesAsync();

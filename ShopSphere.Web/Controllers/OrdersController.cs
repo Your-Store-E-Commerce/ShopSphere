@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using ShopSphere.Data.Entities.Order;
+using ShopSphere.Services.Implementations;
 using ShopSphere.Services.Interfaces;
 using ShopSphere.Web.Models.Order;
 using System.Net;
@@ -14,30 +16,65 @@ namespace ShopSphere.Web.Controllers
     {
         private readonly IOrderServices _orderServices;
         private readonly IMapper _mapper;
+        private readonly IBasketServices _basketServices;
 
         [BindProperty]
         public OrderViewModel OrderVM { get; set; }
 
-        public OrdersController(IOrderServices orderServices, IMapper mapper)
+        public OrdersController(IOrderServices orderServices, IMapper mapper,IBasketServices basketServices)
         {
             _orderServices = orderServices;
             _mapper = mapper;
+           _basketServices = basketServices;
         }
 
-        // GET: /Orders/Checkout
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+
+
+
         [HttpGet]
         public async Task<IActionResult> Checkout()
         {
+            var basketId = Request.Cookies["BasketId"];
+            var basket = await _basketServices.GetBasketAsync(basketId);
+
+            if (basket == null)
+                return RedirectToAction("Index", "Basket");
+
             var deliveryMethods = await _orderServices.GetDeliveryMethod();
             ViewBag.DeliveryMethods = deliveryMethods;
-            OrderVM = new OrderViewModel
+
+            var items = basket.Items.Select(i => new OrderItemViewModel
             {
-                BuyerEmail = "testuser@example.com", // مؤقت
-                BasketId = Request.Cookies["BasketId"]
+                Id = i.Id,
+                ProductId = i.Id,
+                ProductName = i.ProductName,
+                ProductPictureUrl = i.PictureUrl,
+                Price = i.Price,
+                Quantity = i.Quantity
+            }).ToList();
+
+            var subtotal = items.Sum(x => x.Price * x.Quantity);
+
+            var orderVM = new OrderViewModel
+            {
+                BuyerEmail = "testuser@example.com",
+                BasketId = basketId,
+                Items = items,
+                Subtotal = subtotal,
+                Total = subtotal 
             };
 
-            return View(OrderVM);
+            return View(orderVM);
         }
+
+
+
+
 
         // POST: /Orders/CreateOrder
         [HttpPost]
