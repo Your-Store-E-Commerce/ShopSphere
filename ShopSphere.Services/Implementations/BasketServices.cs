@@ -27,41 +27,38 @@ namespace ShopSphere.Services.Implementations
 
 
 
-
         public async Task<bool> DeleteBasketAsync(string basketId)
         {
             return await _basketRepo.DeleteBasketAsync(basketId);
         }
 
-		
-
-		public async Task<CustomerBasket> AddItemToBasketAsync(string basketId, BasketItem item)
-		{
-			if (item == null || item.Quantity <= 0)
-				throw new ArgumentException("Invalid basket item");
-
-			// الحصول على السلة أو إنشاء جديدة
-			var basket = await _basketRepo.GetBasketAsync(basketId) ?? new CustomerBasket(basketId);
-
-			// البحث عن العنصر الموجود
-			var existingItem = basket.Items.FirstOrDefault(i => i.Id == item.Id);
-
-			if (existingItem != null)
-			{
-				existingItem.Quantity += item.Quantity;
-			}
-			else
-			{
-				basket.Items.Add(item);
-			}
-
-			// تحديث السلة في Redis
-			var updatedBasket = await _basketRepo.UpdateBasketAsync(basketId, basket.Items);
-
-			return updatedBasket ?? throw new Exception("Failed to update basket in repository");
-		}
 
 
+        public async Task<CustomerBasket> AddItemToBasketAsync(string basketId, BasketItem item)
+        {
+            if (item == null || item.Quantity <= 0)
+                throw new ArgumentException("Invalid basket item");
+
+            // الحصول على السلة أو إنشاء جديدة
+            var basket = await _basketRepo.GetBasketAsync(basketId) ?? new CustomerBasket(basketId);
+
+            // البحث عن العنصر الموجود
+            var existingItem = basket.Items.FirstOrDefault(i => i.Id == item.Id);
+
+            if (existingItem != null)
+            {
+                existingItem.Quantity += item.Quantity;
+            }
+            else
+            {
+                basket.Items.Add(item);
+            }
+
+            // تحديث السلة في Redis
+            var updatedBasket = await _basketRepo.UpdateBasketAsync(basketId, basket.Items);
+
+            return updatedBasket ?? throw new Exception("Failed to update basket in repository");
+        }
 
 
         public async Task<bool> RemoveItemFromBasketAsync(string basketId, string productId)

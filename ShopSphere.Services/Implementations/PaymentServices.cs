@@ -32,7 +32,7 @@ namespace ShopSphere.Services.Implementations
         }
         public async Task<CustomerBasket> CrateOrUpdatePaymentIntent(string basketId)
         {
-            StripeConfiguration.ApiKey = _configuration["StripeSetting:Secretkey"];
+          
             var productRepo = _unitOfWork.Repository<Data.Entities.Data.Product>();
             var basket = await _basketRepo.GetBasketAsync(basketId);
             if (basket == null) return null;

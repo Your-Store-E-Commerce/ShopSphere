@@ -53,6 +53,17 @@ namespace ShopSphere.Web.Controllers
             var product = await _productServices.GetProductByIdAsync(productId);
             if (product == null) return NotFound("Product not found");
 
+            // استرجاع السلة الحالية باستخدام الـ basketId، إذا كانت السلة غير موجودة أنشئ واحدة جديدة
+            var basket = await _basketService.GetBasketAsync(basketId) ?? new CustomerBasket(basketId);
+
+            // تحقق إذا كان المنتج موجودًا في السلة
+            var existingItem = basket.Items.FirstOrDefault(i => i.Id == productId);
+
+            if (existingItem != null)
+
+                // إذا كان المنتج موجودًا، قم بتحديث الكمية
+                existingItem.Quantity += quantity;
+
             var basketItem = new BasketItem
             {
                 Id = product.Id,
@@ -79,7 +90,7 @@ namespace ShopSphere.Web.Controllers
             }
 
             // ✨ تحديث كوكي العداد
-            Response.Cookies.Append("BasketCount", updatedBasket.Items.Sum(i => i.Quantity).ToString(), new CookieOptions
+            Response.Cookies.Append("BasketCount", updatedBasket.Items.Count.ToString(), new CookieOptions
             {
                 Expires = DateTimeOffset.Now.AddDays(30),
                 HttpOnly = false,
@@ -97,23 +108,6 @@ namespace ShopSphere.Web.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteBasket(string basketId)
-        {
-            if (string.IsNullOrEmpty(basketId))
-                return BadRequest("Invalid Basket ID");
-
-
-            var result = await _basketService.DeleteBasketAsync(basketId);
-
-            if (!result)
-                return BadRequest("Failed to delete basket");
-
-
-            return RedirectToAction(nameof(Index));
-        }
-
-
 
 
         [HttpGet]
@@ -128,7 +122,6 @@ namespace ShopSphere.Web.Controllers
             var basket = await _basketService.GetBasketAsync(basketId);
             return Ok(basket ?? new CustomerBasket(basketId));
         }
-
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromBasket(string productId)
@@ -150,6 +143,18 @@ namespace ShopSphere.Web.Controllers
             if (!removed)
                 return NotFound("Product not found in basket");
 
+            // ✨ تحديث كوكي العداد بعد المسح
+            var updatedBasket = await _basketService.GetBasketAsync(basketId);
+            var itemCount = updatedBasket?.Items.Sum(i => i.Quantity) ?? 0;
+
+            Response.Cookies.Append("BasketCount", itemCount.ToString(), new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30),
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            });
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -166,6 +171,18 @@ namespace ShopSphere.Web.Controllers
 
             if (updatedBasket == null)
                 return BadRequest("Failed to update basket");
+
+            // ✨ تحديث كوكي العداد بعد التحديث
+            var itemCount = updatedBasket.Items.Count.ToString();
+
+
+			Response.Cookies.Append("BasketCount", itemCount.ToString(), new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30),
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            });
 
             return RedirectToAction("Index", new { basketId });
         }

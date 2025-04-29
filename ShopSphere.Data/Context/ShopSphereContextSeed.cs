@@ -54,6 +54,19 @@ namespace ShopSphere.Data.Context
 					await context.SaveChangesAsync();
 				}
 			}
+			
+			if (!context.DeliveryMethods.Any())
+			{
+              
+                var deliverPath = Path.Combine(basePath, "delivery.json");
+				var deliverData = await File.ReadAllTextAsync(deliverPath);
+				var deliver = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliverData);
+				if (deliver?.Count > 0)
+				{
+					await context.Set<DeliveryMethod>().AddRangeAsync(deliver);
+					await context.SaveChangesAsync();
+				}
+			}
 		}
 
 
