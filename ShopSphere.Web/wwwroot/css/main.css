@@ -98,6 +98,24 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 
+
+
+
+
+
+
+.active-menu {
+    color: #0d6efd !important;
+}
+
+
+
+
+
+
+
+
+
 /*//////////////////////////////////////////////////////////////////
 [ RS PLUGIN ]*/
 
@@ -108,6 +126,8 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 @media (max-width: 1600px) {
   .container {max-width: 1200px;}
 }
+
+
 
 /*------------------------------------------------------------------
 [ Slick2 ]*/
@@ -2003,7 +2023,7 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .block1-txt-child2 {
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #fff ;
   overflow: hidden;
   -webkit-transform: scaleX(0);
   -moz-transform: scaleX(0);
@@ -2678,6 +2698,12 @@ input.num-product::-webkit-inner-spin-button {
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+
+
+
+
+
 
 
 

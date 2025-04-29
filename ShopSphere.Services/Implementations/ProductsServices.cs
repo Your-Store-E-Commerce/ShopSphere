@@ -21,6 +21,12 @@ namespace ShopSphere.Services.Implementations
 			return products;
 		}
 
+		public async Task<IReadOnlyList<Product>> GetAllProductsAsync()
+		{
+			var products = await _unitOfWork.Repository<Product>().GetAllAsync();
+			return products;
+		}
+
 
 		public async Task<Product> GetProductByIdAsync(int id)
 		{

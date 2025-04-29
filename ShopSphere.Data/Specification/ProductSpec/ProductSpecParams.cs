@@ -13,8 +13,8 @@ namespace ShopSphere.Data.Specification.ProductSpec
             public int? BrandId { get; set; }
             public int? TypeId { get; set; }
 
-            private int pageSize = 5;
-            private const int MaxPageSize = 10;
+            private int pageSize = int.MaxValue;
+        private const int MaxPageSize = 10;
             public int PageSize
             {
                 get { return pageSize; }
