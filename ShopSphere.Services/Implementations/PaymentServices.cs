@@ -32,7 +32,7 @@ namespace ShopSphere.Services.Implementations
         }
         public async Task<CustomerBasket> CrateOrUpdatePaymentIntent(string basketId)
         {
-          
+            
             var productRepo = _unitOfWork.Repository<Data.Entities.Data.Product>();
             var basket = await _basketRepo.GetBasketAsync(basketId);
             if (basket == null) return null;

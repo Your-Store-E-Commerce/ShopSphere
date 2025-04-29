@@ -106,6 +106,28 @@ namespace ShopSphere.Web.Controllers
             });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteBasket(string basketId)
+        {
+            if (string.IsNullOrEmpty(basketId))
+                return BadRequest("Invalid Basket ID");
+
+            var result = await _basketService.DeleteBasketAsync(basketId);
+
+            if (!result)
+                return BadRequest("Failed to delete basket");
+
+            // ✨ تصفير عداد السلة في الكوكي
+            Response.Cookies.Append("BasketCount", "0", new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30),
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            });
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
 
@@ -146,7 +168,8 @@ namespace ShopSphere.Web.Controllers
             // ✨ تحديث كوكي العداد بعد المسح
             var updatedBasket = await _basketService.GetBasketAsync(basketId);
             var itemCount = updatedBasket?.Items.Sum(i => i.Quantity) ?? 0;
-
+       
+            // ✨ تصفير أو تحديث العداد حسب عدد العناصر
             Response.Cookies.Append("BasketCount", itemCount.ToString(), new CookieOptions
             {
                 Expires = DateTimeOffset.Now.AddDays(30),
@@ -154,6 +177,7 @@ namespace ShopSphere.Web.Controllers
                 IsEssential = true,
                 SameSite = SameSiteMode.Lax
             });
+       
 
             return RedirectToAction(nameof(Index));
         }

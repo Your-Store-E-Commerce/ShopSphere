@@ -28,6 +28,10 @@ namespace ShopSphere.Web.Mapper
              .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
            .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Name));
 
+            CreateMap<ProductType, ProductTypeViewModel>()
+             .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))
+           .ForMember(dest => dest.TypeName, opt => opt.MapFrom(src => src.Name));
+
         }
     }
 }
