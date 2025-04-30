@@ -1,140 +1,139 @@
-﻿@model ShopSphere.Web.Models.Order.PaymentViewModel
+
 
 @{
     ViewData["Title"] = "Payment";
 }
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
 
-    .payment-form-container {
-        background: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 400px;
-        max-width: 100%;
-        text-align: center;
-    }
 
-        .payment-form-container h2 {
-            margin-bottom: 20px;
-        }
 
-        .payment-form-container label {
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: block;
-        }
+<div class="payment-wrapper">
 
-        .payment-form-container #card-element {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
+    <label class="field-label">Email</label>
+    <div class="card-info">
+        <input type="text" placeholder="Ex@gmail.com" />
 
-        .payment-form-container #card-errors {
-            color: red;
-            margin-top: 10px;
-        }
+    </div>
 
-        .payment-form-container button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
 
-            .payment-form-container button:hover {
-                background-color: #45a049;
-            }
 
-        .payment-form-container #payment-status {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-</style>
+    <h3>Payment method</h3>
 
-<div class="payment-form-container">
-    <h2>Payment</h2>
-    <form id="payment-form">
-        <div>
-            <label for="card-element">Credit or Debit Card</label>
-            <div id="card-element">
-                <!-- Stripe Element will be inserted here -->
-            </div>
+    <div class="payment-box">
+        <div class="method-option">
 
-            <!-- Used to display form errors -->
-            <div id="card-errors" role="alert"></div>
+            <img src="https://img.icons8.com/material-outlined/24/000000/bank-card-back-side.png" />
+            <label>Card</label>
         </div>
 
-        <button id="submit">Pay Now</button>
-        <p id="payment-status"></p>
-    </form>
+        <label class="field-label">Card information</label>
+        <div class="card-info">
+            <input type="text" placeholder="1234 1234 1234 1234" />
+            <div class="card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" />
+
+            </div>
+        </div>
+
+        <div class="card-exp">
+            <input type="text" placeholder="MM / YY" />
+            <input type="text" placeholder="CVC" />
+        </div>
+
+        <label class="field-label">Cardholder name</label>
+        <input type="text" placeholder="Full name on card" />
+
+        <label class="field-label">Country or region</label>
+        <select>
+            <option selected>Egypt</option>
+            <option>USA</option>
+            <option>Germany</option>
+        </select>
+    </div>
+    <a href="#" class="btn btn-success px-4 text-white d-block text-center mt-5">
+        Pay
+    </a>
+
 </div>
 
-
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    var basketId = '@Model.BasketId';
-    var elements = stripe.elements();
-
-    var card = elements.create('card');
-    card.mount('#card-element');
-
-    document.getElementById('payment-form').addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        const response = await fetch('/payments/create-or-update-payment-intent', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ basketId: basketId })
-        });
-
-        const result = await response.json();
-
-        //stripe
-        const clientSecret = result.clientSecret;
-
-        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card,
-                billing_details: {
-                    name: 'Test User'
-                }
-            }
-        });
-
-        if (error) {
-            document.getElementById('card-errors').textContent = error.message;
-        } else if (paymentIntent.status === 'succeeded') {
-            document.getElementById('payment-status').textContent = 'Payment succeeded!';
-            await fetch('/payments/update-order-status', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    paymentIntentId: paymentIntent.id,
-                    isPaid: true
-                })
-            });
+@section Styles {
+    <style>
+        .payment-wrapper {
+            max-width: 500px;
+            margin: 100px auto 30px auto; /* Top - Right - Bottom - Left */
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
         }
-    });
-</script>
+
+        h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .payment-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .method-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cash {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .card-info {
+            position: relative;
+        }
+
+        .card-icons {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+            .card-icons img {
+                height: 22px;
+                width: auto;
+            }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .card-exp {
+            display: flex;
+            gap: 10px;
+        }
+
+            .card-exp input {
+                flex: 1;
+            }
+
+        .field-label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+}
+
+

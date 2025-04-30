@@ -7,61 +7,61 @@ using ShopSphere.Web.Models.Order;
 namespace ShopSphere.Controllers
 {
     public class PaymentsController : Controller
-    {
+    {                                                                                 
         private readonly IPaymentServices _paymentServices;
 
-        public PaymentsController(IPaymentServices paymentServices)
-        {
-            _paymentServices = paymentServices;
-        }
 
-        // عرض صفحة الدفع
-        [HttpGet]
-        public async Task<IActionResult> Payment()
-        {
-            var basketId = Request.Cookies["BasketId"];
 
-            if (string.IsNullOrEmpty(basketId))
-            {
-                return BadRequest("Basket ID is required.");
-            }
+		private readonly IConfiguration _configuration;
 
-            var basket = await _paymentServices.CrateOrUpdatePaymentIntent(basketId);
-            if (basket == null)
-            {
-                return NotFound("Basket not found.");
-            }
+		public PaymentsController(IPaymentServices paymentServices, IConfiguration configuration)
+		{
+			_paymentServices = paymentServices;
+			_configuration = configuration;
+		}
 
-            var model = new PaymentViewModel
-            {
-                BasketId = basket.Id,
-                PaymentIntentId = basket.PaymentIntentId,
-                ClientSecret = basket.ClientSecret
-            };
 
-            return View(model);
-        }
-        [HttpPost("payments/create-or-update-payment-intent")]
-        public async Task<IActionResult> CreateOrUpdatePaymentIntent([FromBody] BasketRequestModel model)
-        {
 
-            if (string.IsNullOrEmpty(model.BasketId))
-            {
-                return BadRequest("Basket ID is required.");
-            }
 
-            var basket = await _paymentServices.CrateOrUpdatePaymentIntent(model.BasketId);
+		[HttpGet]
+		public async Task<IActionResult> Payment()
+		{
+			var basketId = Request.Cookies["BasketId"];
 
-            if (basket == null)
-            {
-                return NotFound("Basket not found.");
-            }
+			if (string.IsNullOrEmpty(basketId))
+				return BadRequest("Basket ID is required.");
 
-            return Ok(new { clientSecret = basket.ClientSecret });
-        }
+			var basket = await _paymentServices.CrateOrUpdatePaymentIntent(basketId);
+			if (basket == null)
+				return NotFound("Basket not found.");
 
-        // تحديث حالة الدفع بعد التأكد من الدفع
-        [HttpPost]
+			var model = new OrderViewModel
+			{
+				BasketId = basket.Id,
+				PaymentIntentId = basket.PaymentIntentId,
+				ClientSecret = basket.ClientSecret,
+				PublishKey = _configuration["StripeSetting:PublishKey"],
+
+				// ممكن تضيفي باقي بيانات المستخدم من سلة الشراء أو من الـ session أو auth
+				FullName = "Test Name",
+				PhoneNumber = "1234567890",
+				ShippingAddress = "Test Address",
+				BuyerEmail = "test@example.com",
+				Items = basket.Items.Select(i => new OrderItemViewModel
+				{
+					ProductName = i.ProductName,
+					Quantity = i.Quantity,
+					Price = i.Price
+				}).ToList(),
+				Subtotal = basket.Items.Sum(i => i.Quantity * i.Price),
+				Total = basket.Items.Sum(i => i.Quantity * i.Price) // + Shipping لو فيه
+			};
+
+			return View(model);
+		}
+
+
+		[HttpPost]
         public async Task<IActionResult> UpdateOrderStatus(string paymentIntentId, bool isPaid)
         {
             if (string.IsNullOrEmpty(paymentIntentId))

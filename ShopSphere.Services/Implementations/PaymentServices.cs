@@ -86,28 +86,29 @@ namespace ShopSphere.Services.Implementations
 
             }
 
-           await _basketRepo.UpdateBasketAsync(basket.Id, basket.Items);
+            await _basketRepo.UpdateBasketAsync(basket.Id, basket.Items);
 
             return basket;
         }
+   
 
-        public async Task<Order?> UpdateOrderStatus(string paymentIntentId, bool isPaid)
-        {
-            var orderRepo = _unitOfWork.Repository<Order>();
-            var spec = new OrderWithPaymentSpecification(paymentIntentId);
+    public async Task<Order?> UpdateOrderStatus(string paymentIntentId, bool isPaid)
+    {
+        var orderRepo = _unitOfWork.Repository<Order>();
+        var spec = new OrderWithPaymentSpecification(paymentIntentId);
 
-            var order = await orderRepo.GetByIdWihSpecAsync(spec);
+        var order = await orderRepo.GetByIdWihSpecAsync(spec);
 
-            if (order is null) return null;
+        if (order is null) return null;
 
-            if (isPaid)
-                order.orderStatus = OrderStatus.Received;
-            else
-                order.orderStatus = OrderStatus.Failed;
+        if (isPaid)
+            order.orderStatus = OrderStatus.Received;
+        else
+            order.orderStatus = OrderStatus.Failed;
 
-          await   orderRepo.Update(order.Id ,order);
-            await _unitOfWork.CompleteAsync();
-            return order;
-        }
+        await orderRepo.Update(order.Id, order);
+        await _unitOfWork.CompleteAsync();
+        return order;
     }
+}
 }

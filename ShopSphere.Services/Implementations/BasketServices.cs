@@ -1,4 +1,5 @@
 ﻿using ShopSphere.Data.Entities.Basket;
+using ShopSphere.Data.Entities.Order;
 using ShopSphere.Data.Repositories.Interfaces;
 using ShopSphere.Services.Interfaces;
 
@@ -12,6 +13,13 @@ namespace ShopSphere.Services.Implementations
         {
             _basketRepo = basketRepo;
         }
+
+
+
+       
+
+
+
 
         public async Task<CustomerBasket?> GetBasketAsync(string basketId)
         {
@@ -108,6 +116,12 @@ namespace ShopSphere.Services.Implementations
             // تحديث السلة في المستودع
             return await _basketRepo.UpdateBasketAsync(basketId, basket.Items);
         }
+
+
+
+
+
+
     }
 
 
