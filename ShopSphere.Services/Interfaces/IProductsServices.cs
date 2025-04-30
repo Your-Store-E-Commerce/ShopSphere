@@ -1,4 +1,6 @@
 ﻿using ShopSphere.Data.Entities.Data;
+using ShopSphere.Data.Specification.ProductSpec;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,16 @@ namespace ShopSphere.Services.Interfaces
 {
     public interface IProductsServices
     {
-        Task<IEnumerable<Product>> GetProductsAsync();
+        Task<IReadOnlyList<Product>> GetProductsAsync(ProductSpecParams productSpec);
         Task<Product> GetProductByIdAsync(int id);
-      
+		Task<IReadOnlyList<Product>> GetAllProductsAsync();
 
-    }
+		Task<IReadOnlyList<ProductBrand>> GetBrandsAsync();
+		Task<IReadOnlyList<ProductType>> GetTypesAsync();
+		// Admin Services
+		Task CreateAsync(Product product);
+		Task UpdateAsync(int id, Product product);
+		Task DeleteAsync(int id);
+		
+	}
 }

@@ -1,0 +1,139 @@
+
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+
+
+
+<div class="payment-wrapper">
+
+    <label class="field-label">Email</label>
+    <div class="card-info">
+        <input type="text" placeholder="Ex@gmail.com" />
+
+    </div>
+
+
+
+    <h3>Payment method</h3>
+
+    <div class="payment-box">
+        <div class="method-option">
+
+            <img src="https://img.icons8.com/material-outlined/24/000000/bank-card-back-side.png" />
+            <label>Card</label>
+        </div>
+
+        <label class="field-label">Card information</label>
+        <div class="card-info">
+            <input type="text" placeholder="1234 1234 1234 1234" />
+            <div class="card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" />
+
+            </div>
+        </div>
+
+        <div class="card-exp">
+            <input type="text" placeholder="MM / YY" />
+            <input type="text" placeholder="CVC" />
+        </div>
+
+        <label class="field-label">Cardholder name</label>
+        <input type="text" placeholder="Full name on card" />
+
+        <label class="field-label">Country or region</label>
+        <select>
+            <option selected>Egypt</option>
+            <option>USA</option>
+            <option>Germany</option>
+        </select>
+    </div>
+    <a href="#" class="btn btn-success px-4 text-white d-block text-center mt-5">
+        Pay
+    </a>
+
+</div>
+
+@section Styles {
+    <style>
+        .payment-wrapper {
+            max-width: 500px;
+            margin: 100px auto 30px auto; /* Top - Right - Bottom - Left */
+            background: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .payment-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .method-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cash {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .card-info {
+            position: relative;
+        }
+
+        .card-icons {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+            .card-icons img {
+                height: 22px;
+                width: auto;
+            }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .card-exp {
+            display: flex;
+            gap: 10px;
+        }
+
+            .card-exp input {
+                flex: 1;
+            }
+
+        .field-label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+}
+
+

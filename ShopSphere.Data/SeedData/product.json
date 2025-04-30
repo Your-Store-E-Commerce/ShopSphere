@@ -1,0 +1,626 @@
+[
+  {
+    "Name": "category accessories",
+    "Description": "Sample description for category accessories",
+    "Price": 105.5,
+    "PictureUrl": "/images/category_accessories.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category apparel",
+    "Description": "Sample description for category apparel",
+    "Price": 111.0,
+    "PictureUrl": "/images/category_apparel.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category apparel accessories",
+    "Description": "Sample description for category apparel accessories",
+    "Price": 116.5,
+    "PictureUrl": "/images/category_apparel_accessories.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category book",
+    "Description": "Sample description for category book",
+    "Price": 122.0,
+    "PictureUrl": "/images/category_book.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category camera photo",
+    "Description": "Sample description for category camera photo",
+    "Price": 127.5,
+    "PictureUrl": "/images/category_camera_photo.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category cell phones",
+    "Description": "Sample description for category cell phones",
+    "Price": 133.0,
+    "PictureUrl": "/images/category_cell_phones.jpeg",
+    "TypeId": 1,
+    "BrandId": 6
+  },
+  {
+    "Name": "category clothing",
+    "Description": "Sample description for category clothing",
+    "Price": 138.5,
+    "PictureUrl": "/images/category_clothing.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category computers",
+    "Description": "Sample description for category computers",
+    "Price": 144.0,
+    "PictureUrl": "/images/category_computers.jpeg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "category desktops",
+    "Description": "Sample description for category desktops",
+    "Price": 149.5,
+    "PictureUrl": "/images/category_desktops.jpg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "category digital downloads",
+    "Description": "Sample description for category digital downloads",
+    "Price": 155.0,
+    "PictureUrl": "/images/category_digital_downloads.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category electronics",
+    "Description": "Sample description for category electronics",
+    "Price": 160.5,
+    "PictureUrl": "/images/category_electronics.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category gift cards",
+    "Description": "Sample description for category gift cards",
+    "Price": 166.0,
+    "PictureUrl": "/images/category_gift_cards.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category jewelry",
+    "Description": "Sample description for category jewelry",
+    "Price": 171.5,
+    "PictureUrl": "/images/category_jewelry.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category notebooks",
+    "Description": "Sample description for category notebooks",
+    "Price": 177.0,
+    "PictureUrl": "/images/category_notebooks.jpg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "category shoes",
+    "Description": "Sample description for category shoes",
+    "Price": 182.5,
+    "PictureUrl": "/images/category_shoes.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "category software",
+    "Description": "Sample description for category software",
+    "Price": 188.0,
+    "PictureUrl": "/images/category_software.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "manufacturer apple",
+    "Description": "Sample description for manufacturer apple",
+    "Price": 193.5,
+    "PictureUrl": "/images/manufacturer_apple.jpg",
+    "TypeId": 6,
+    "BrandId": 1
+  },
+  {
+    "Name": "manufacturer hp",
+    "Description": "Sample description for manufacturer hp",
+    "Price": 199.0,
+    "PictureUrl": "/images/manufacturer_hp.jpg",
+    "TypeId": 2,
+    "BrandId": 4
+  },
+  {
+    "Name": "manufacturer nike",
+    "Description": "Sample description for manufacturer nike",
+    "Price": 204.5,
+    "PictureUrl": "/images/manufacturer_nike.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "p attribute print 1",
+    "Description": "Sample description for p attribute print 1",
+    "Price": 210.0,
+    "PictureUrl": "/images/p_attribute_print_1.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "p attribute print 2",
+    "Description": "Sample description for p attribute print 2",
+    "Price": 215.5,
+    "PictureUrl": "/images/p_attribute_print_2.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product 100giftcart",
+    "Description": "Sample description for product 100giftcart",
+    "Price": 221.0,
+    "PictureUrl": "/images/product_100giftcart.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product 25giftcart",
+    "Description": "Sample description for product 25giftcart",
+    "Price": 226.5,
+    "PictureUrl": "/images/product_25giftcart.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product 50giftcart",
+    "Description": "Sample description for product 50giftcart",
+    "Price": 232.0,
+    "PictureUrl": "/images/product_50giftcart.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product AdobePhotoshop",
+    "Description": "Sample description for product AdobePhotoshop",
+    "Price": 237.5,
+    "PictureUrl": "/images/product_AdobePhotoshop.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Belt",
+    "Description": "Sample description for product Belt",
+    "Price": 243.0,
+    "PictureUrl": "/images/product_Belt.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product CustomTShirt",
+    "Description": "Sample description for product CustomTShirt",
+    "Price": 248.5,
+    "PictureUrl": "/images/product_CustomTShirt.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Desktops 1",
+    "Description": "Sample description for product Desktops 1",
+    "Price": 254.0,
+    "PictureUrl": "/images/product_Desktops_1.jpeg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Desktops 2",
+    "Description": "Sample description for product Desktops 2",
+    "Price": 259.5,
+    "PictureUrl": "/images/product_Desktops_2.jpeg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "product DigitalStorm",
+    "Description": "Sample description for product DigitalStorm",
+    "Price": 265.0,
+    "PictureUrl": "/images/product_DigitalStorm.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product EngagementRing 1",
+    "Description": "Sample description for product EngagementRing 1",
+    "Price": 270.5,
+    "PictureUrl": "/images/product_EngagementRing_1.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Fahrenheit451",
+    "Description": "Sample description for product Fahrenheit451",
+    "Price": 276.0,
+    "PictureUrl": "/images/product_Fahrenheit451.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product FirstPrizePies",
+    "Description": "Sample description for product FirstPrizePies",
+    "Price": 281.5,
+    "PictureUrl": "/images/product_FirstPrizePies.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product FlowerBracelet",
+    "Description": "Sample description for product FlowerBracelet",
+    "Price": 287.0,
+    "PictureUrl": "/images/product_FlowerBracelet.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product GemstoneNecklaces",
+    "Description": "Sample description for product GemstoneNecklaces",
+    "Price": 292.5,
+    "PictureUrl": "/images/product_GemstoneNecklaces.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product HPSpectreXT 1",
+    "Description": "Sample description for product HPSpectreXT 1",
+    "Price": 298.0,
+    "PictureUrl": "/images/product_HPSpectreXT_1.jpeg",
+    "TypeId": 2,
+    "BrandId": 4
+  },
+  {
+    "Name": "product HPSpectreXT 2",
+    "Description": "Sample description for product HPSpectreXT 2",
+    "Price": 303.5,
+    "PictureUrl": "/images/product_HPSpectreXT_2.jpeg",
+    "TypeId": 2,
+    "BrandId": 4
+  },
+  {
+    "Name": "product HTC One M8",
+    "Description": "Sample description for product HTC One M8",
+    "Price": 309.0,
+    "PictureUrl": "/images/product_HTC_One_M8.jpeg",
+    "TypeId": 1,
+    "BrandId": 6
+  },
+  {
+    "Name": "product HTC One Mini 1",
+    "Description": "Sample description for product HTC One Mini 1",
+    "Price": 314.5,
+    "PictureUrl": "/images/product_HTC_One_Mini_1.jpeg",
+    "TypeId": 1,
+    "BrandId": 6
+  },
+  {
+    "Name": "product HTC One Mini 2",
+    "Description": "Sample description for product HTC One Mini 2",
+    "Price": 320.0,
+    "PictureUrl": "/images/product_HTC_One_Mini_2.jpeg",
+    "TypeId": 1,
+    "BrandId": 6
+  },
+  {
+    "Name": "product HpEnvy6",
+    "Description": "Sample description for product HpEnvy6",
+    "Price": 325.5,
+    "PictureUrl": "/images/product_HpEnvy6.jpeg",
+    "TypeId": 2,
+    "BrandId": 4
+  },
+  {
+    "Name": "product IfYouWait",
+    "Description": "Sample description for product IfYouWait",
+    "Price": 331.0,
+    "PictureUrl": "/images/product_IfYouWait.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product LeicaT",
+    "Description": "Sample description for product LeicaT",
+    "Price": 336.5,
+    "PictureUrl": "/images/product_LeicaT.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product LenovoIdeaCentre",
+    "Description": "Sample description for product LenovoIdeaCentre",
+    "Price": 342.0,
+    "PictureUrl": "/images/product_LenovoIdeaCentre.jpeg",
+    "TypeId": 2,
+    "BrandId": 3
+  },
+  {
+    "Name": "product LenovoThinkpad",
+    "Description": "Sample description for product LenovoThinkpad",
+    "Price": 347.5,
+    "PictureUrl": "/images/product_LenovoThinkpad.jpeg",
+    "TypeId": 2,
+    "BrandId": 3
+  },
+  {
+    "Name": "product LeviJeans 1",
+    "Description": "Sample description for product LeviJeans 1",
+    "Price": 353.0,
+    "PictureUrl": "/images/product_LeviJeans_1.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product LeviJeans 2",
+    "Description": "Sample description for product LeviJeans 2",
+    "Price": 358.5,
+    "PictureUrl": "/images/product_LeviJeans_2.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Lumia1020",
+    "Description": "Sample description for product Lumia1020",
+    "Price": 364.0,
+    "PictureUrl": "/images/product_Lumia1020.jpeg",
+    "TypeId": 1,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NightVisions",
+    "Description": "Sample description for product NightVisions",
+    "Price": 369.5,
+    "PictureUrl": "/images/product_NightVisions.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikeFloralShoe 1",
+    "Description": "Sample description for product NikeFloralShoe 1",
+    "Price": 375.0,
+    "PictureUrl": "/images/product_NikeFloralShoe_1.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikeFloralShoe 2",
+    "Description": "Sample description for product NikeFloralShoe 2",
+    "Price": 380.5,
+    "PictureUrl": "/images/product_NikeFloralShoe_2.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikeShirt",
+    "Description": "Sample description for product NikeShirt",
+    "Price": 386.0,
+    "PictureUrl": "/images/product_NikeShirt.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikeZoom",
+    "Description": "Sample description for product NikeZoom",
+    "Price": 391.5,
+    "PictureUrl": "/images/product_NikeZoom.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikonCamera 1",
+    "Description": "Sample description for product NikonCamera 1",
+    "Price": 397.0,
+    "PictureUrl": "/images/product_NikonCamera_1.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikonCamera 2",
+    "Description": "Sample description for product NikonCamera 2",
+    "Price": 402.5,
+    "PictureUrl": "/images/product_NikonCamera_2.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikonCamera black",
+    "Description": "Sample description for product NikonCamera black",
+    "Price": 408.0,
+    "PictureUrl": "/images/product_NikonCamera_black.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product NikonCamera red",
+    "Description": "Sample description for product NikonCamera red",
+    "Price": 413.5,
+    "PictureUrl": "/images/product_NikonCamera_red.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product PillBeats 1",
+    "Description": "Sample description for product PillBeats 1",
+    "Price": 419.0,
+    "PictureUrl": "/images/product_PillBeats_1.jpeg",
+    "TypeId": 4,
+    "BrandId": 6
+  },
+  {
+    "Name": "product PillBeats 2",
+    "Description": "Sample description for product PillBeats 2",
+    "Price": 424.5,
+    "PictureUrl": "/images/product_PillBeats_2.jpeg",
+    "TypeId": 4,
+    "BrandId": 6
+  },
+  {
+    "Name": "product PrideAndPrejudice",
+    "Description": "Sample description for product PrideAndPrejudice",
+    "Price": 430.0,
+    "PictureUrl": "/images/product_PrideAndPrejudice.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product SamsungNP900X4C",
+    "Description": "Sample description for product SamsungNP900X4C",
+    "Price": 435.5,
+    "PictureUrl": "/images/product_SamsungNP900X4C.jpeg",
+    "TypeId": 1,
+    "BrandId": 2
+  },
+  {
+    "Name": "product ScienceAndFaith",
+    "Description": "Sample description for product ScienceAndFaith",
+    "Price": 441.0,
+    "PictureUrl": "/images/product_ScienceAndFaith.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product SoundForge",
+    "Description": "Sample description for product SoundForge",
+    "Price": 446.5,
+    "PictureUrl": "/images/product_SoundForge.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Speakers",
+    "Description": "Sample description for product Speakers",
+    "Price": 452.0,
+    "PictureUrl": "/images/product_Speakers.jpeg",
+    "TypeId": 4,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Sunglasses",
+    "Description": "Sample description for product Sunglasses",
+    "Price": 457.5,
+    "PictureUrl": "/images/product_Sunglasses.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product TabletCover",
+    "Description": "Sample description for product TabletCover",
+    "Price": 463.0,
+    "PictureUrl": "/images/product_TabletCover.jpeg",
+    "TypeId": 3,
+    "BrandId": 6
+  },
+  {
+    "Name": "product Windows",
+    "Description": "Sample description for product Windows",
+    "Price": 468.5,
+    "PictureUrl": "/images/product_Windows.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product WomenTShirt",
+    "Description": "Sample description for product WomenTShirt",
+    "Price": 474.0,
+    "PictureUrl": "/images/product_WomenTShirt.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product adidas",
+    "Description": "Sample description for product adidas",
+    "Price": 479.5,
+    "PictureUrl": "/images/product_adidas.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product adidas 2",
+    "Description": "Sample description for product adidas 2",
+    "Price": 485.0,
+    "PictureUrl": "/images/product_adidas_2.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product adidas 3",
+    "Description": "Sample description for product adidas 3",
+    "Price": 490.5,
+    "PictureUrl": "/images/product_adidas_3.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product asuspc N551JK",
+    "Description": "Sample description for product asuspc N551JK",
+    "Price": 496.0,
+    "PictureUrl": "/images/product_asuspc_N551JK.jpeg",
+    "TypeId": 2,
+    "BrandId": 6
+  },
+  {
+    "Name": "product hat",
+    "Description": "Sample description for product hat",
+    "Price": 501.5,
+    "PictureUrl": "/images/product_hat.jpg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product iCam",
+    "Description": "Sample description for product iCam",
+    "Price": 507.0,
+    "PictureUrl": "/images/product_iCam.jpeg",
+    "TypeId": 6,
+    "BrandId": 6
+  },
+  {
+    "Name": "product iphone 16 128",
+    "Description": "Sample description for product iphone 16 128",
+    "Price": 512.5,
+    "PictureUrl": "/images/product_iphone_16_128.png",
+    "TypeId": 1,
+    "BrandId": 1
+  },
+  {
+    "Name": "product macbook 1",
+    "Description": "Sample description for product macbook 1",
+    "Price": 518.0,
+    "PictureUrl": "/images/product_macbook_1.jpeg",
+    "TypeId": 2,
+    "BrandId": 1
+  },
+  {
+    "Name": "product macbook 2",
+    "Description": "Sample description for product macbook 2",
+    "Price": 523.5,
+    "PictureUrl": "/images/product_macbook_2.jpeg",
+    "TypeId": 2,
+    "BrandId": 1
+  },
+  {
+    "Name": "product samsung galaxy s24",
+    "Description": "Sample description for product samsung galaxy s24",
+    "Price": 529.0,
+    "PictureUrl": "/images/product_samsung_galaxy_s24.png",
+    "TypeId": 1,
+    "BrandId": 2
+  }
+]

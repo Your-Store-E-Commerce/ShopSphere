@@ -1,0 +1,56 @@
+﻿@model ShopSphere.Web.Models.Order.OrderToReturnViewModel ;
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h2 class="mb-4">Order #@Model.Id Details</h2>
+
+<div class="mb-4">
+    <h4>Shipping Information</h4>
+    <p><strong>Email:</strong> @Model.BuyerEmail</p>
+    <p><strong>Address:</strong> @Model.ShippingAddress</p>
+    <p><strong>Delivery Method:</strong> @Model.DeliveryMethod (@Model.DeliveryMethodCost)</p>
+    <p><strong>Order Status:</strong> @Model.orderStatus</p>
+    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+    <p><strong>Subtotal:</strong> @Model.Subtotal.ToString("C")</p>
+    <p><strong>Total:</strong> @Model.Total.ToString("C")</p>
+</div>
+
+<hr />
+
+<h4 class="mb-3">Items</h4>
+
+@if (Model.Items == null || !Model.Items.Any())
+{
+    <p>No items found for this order.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ProductPictureUrl" alt="@item.ProductName" width="60" height="60" />
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Price * item.Quantity).ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

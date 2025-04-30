@@ -1,49 +1,461 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ShopSphere.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ShopSphere.Web.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ShopSphere.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>ShopSphere</title>
+	<link rel="icon" type="image/png" href="~/images/images.png" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/ShopSphere.Web.styles.css" asp-append-version="true" />
+	
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - ShopSphere.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/slick/slick.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/MagnificPopup/magnific-popup.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="~/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<!-- Toastr CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="~/css/util.css">
+	<link rel="stylesheet" type="text/css" href="~/css/main.css">
+
+
+
+
+
+
+
+
+	@RenderSection("Styles", required: false)
+
+</head>
+<body class="animsition">
+
+
+
+	<header>
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
+
+					<div class="right-top-bar flex-w h-full">
+						<a asp-controller="Account" asp-action="Login" class="flex-c-m trans-04 p-lr-25">
+							Login
+						</a>
+
+						<a asp-controller="Account" asp-action="Register" class="flex-c-m trans-04 p-lr-25">
+							Register
+						</a>
+
+
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop container">
+
+				
+					<a asp-controller="Home" asp-action="Index" class="logo">
+						<span class="logo-text" style="font-size: 22px; color: black; font-weight: bold; text-decoration: none; font-family: Arial, sans-serif;">
+							<span style="font-size: 22px; color: green">$</span>ShopSphere<span style="font-size: 22px; color: green">$</span>
+						</span>
+					</a>
+
+
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li class="menu-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active-menu" : "")">
+								<a asp-controller="Home" asp-action="Index">Home</a>
+							</li>
+							<li class="menu-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Products" ? "active-menu" : "")">
+								<a asp-controller="Products" asp-action="Index">Shop</a>
+							</li>
+							<li class="menu-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Blog" ? "active-menu" : "")">
+								<a asp-controller="Blog" asp-action="Index">Blog</a>
+							</li>
+							<li class="menu-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "About" ? "active-menu" : "")">
+								<a asp-controller="About" asp-action="Index">About</a>
+							</li>
+							<li class="menu-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Contact" ? "active-menu" : "")">
+								<a asp-controller="Contact" asp-action="Index">Contact</a>
+							</li>
+						</ul>
+					</div>
+
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+		
+						@{
+							var basketCountCookie = Context.Request.Cookies["BasketCount"];
+							var basketCount = !string.IsNullOrEmpty(basketCountCookie) ? int.Parse(basketCountCookie) : 0;
+						}
+
+						
+							<a asp-controller="Basket" asp-action="Index"
+						   class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti  @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active-menu" : "" )"
+							   data-notify="@basketCount">
+								<i class="zmdi zmdi-shopping-cart-add"></i>
+							</a>
+
+					
+
+
+					
+					</div>
+
+				</nav>
+			</div>
+		</div>
+
+	
+		
+	</header>
+
+
+
+
+	
+	<main role="main">
+		@RenderBody()
+	</main>
+
+
+
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Smartphones
+							</a>
+						</li>
+
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Laptops
+							</a>
+						</li>
+
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Tablets
+							</a>
+						</li>
+
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Headphones
+							</a>
+						</li>
+
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Monitors
+							</a>
+						</li>
+						<li class="p-b-5">
+							<a asp-controller="Products" asp-action="Index" class="stext-107 cl7 hov-cl1 trans-04">
+								Accessories
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Returns
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fab fa-facebook"></i>
+						</a>
+						
+						
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fab fa-instagram"></i>
+						</a>
+
+						
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fab fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+	</footer>
+
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+
+
+
+
+
+
+	<!-- باقي السكربتات التي تم تضمينها -->
+
+	<script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/bootstrap/js/popper.js"></script>
+	<script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function () {
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	
+
+	<!-- Toastr JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script src="~/vendor/daterangepicker/moment.min.js"></script>
+	<script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/slick/slick.min.js"></script>
+	<script src="~/js/slick-custom.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/parallax100/parallax100.js"></script>
+	<script>
+		$('.parallax100').parallax100();
+	</script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<script>
+		$('.gallery-lb').each(function () { // the containers for all your galleries
+			$(this).magnificPopup({
+				delegate: 'a', // the selector for gallery item
+				type: 'image',
+				gallery: {
+					enabled: true
+				},
+				mainClass: 'mfp-fade'
+			});
+		});
+	</script>
+
+	<!--===============================================================================================-->
+	<script src="~/vendor/isotope/isotope.pkgd.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="~/vendor/sweetalert/sweetalert.min.js"></script>
+	<script>
+		$('.js-addwish-b2').on('click', function (e) {
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function () {
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function () {
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function () {
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function () {
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function () {
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function () {
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+	</script>
+
+	<!--===============================================================================================-->
+	<script src="~/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function () {
+				ps.update();
+			})
+		});
+	</script>
+
+	<!-- Google Maps API -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+	<script src="~/js/map-custom.js"></script>
+
+	<!--===============================================================================================-->
+	<script src="~/js/main.js"></script>
+	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	<!-- Active Menu Script -->
+	<script>
+		$(document).ready(function () {
+			// Add active class on click for main menu items
+			$('.menu-item').on('click', function () {
+				// Remove active class from all menu items
+				$('.menu-item').removeClass('active-menu');
+				// Add active class to the clicked menu item
+				$(this).addClass('active-menu');
+			});
+
+			// Add active class on click for Basket and Wishlist
+			$('.icon-header-item').on('click', function () {
+				// Remove active class from all icon items
+				$('.icon-header-item').removeClass('active-icon');
+				// Add active class to the clicked icon item
+				$(this).addClass('active-icon');
+			});
+		});
+
+		$(document).ready(function () {
+			$('.update-form').on('submit', function (e) {
+				e.preventDefault();
+				$.post($(this).attr('action'), $(this).serialize(), function () {
+					location.reload(); // إعادة تحميل الصفحة بعد التغيير
+				});
+			});
+	</script>
+
+	<!-- Section for additional scripts (optional) -->
+	@await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+
 </body>
 </html>
+
+

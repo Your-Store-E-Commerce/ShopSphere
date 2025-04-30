@@ -7,29 +7,29 @@ using System.Threading.Tasks;
 
 namespace ShopSphere.Data.Specification
 {
-    internal static class SpecificationEvaluator<T> where T : BaseEntity
+    public static class SpecificationEvaluator<T> where T : BaseEntity
     {
-        public static IQueryable<T> GetQuery  (IQueryable<T> inputQuery ,ISpecification<T> spec )
+        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, IBaseSpecification<T> spec)
         {
             var query = inputQuery;
 
-            if(spec.Criteria is not  null)
-                query = inputQuery.Where(spec.Criteria);
-          
-            if(spec.OrderBy is not null) 
-                query = inputQuery.OrderBy(spec.OrderBy);
+            if (spec.Criteria is not null)
+                query = query.Where(spec.Criteria);
 
-           else if(spec.OrderByDesc is not null)
-                query = inputQuery.OrderByDescending(spec.OrderByDesc);
+            if (spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
 
-            if(spec.IsPaginationEnable)
-                query = inputQuery.Skip(spec.Skip).Take(spec.Take);
+            else if (spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc);
 
-            query = spec.Includes.Aggregate(inputQuery, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+            if (spec.IsPaginationEnable)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
+            query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
 
             return query;
+
         }
-        
     }
 }

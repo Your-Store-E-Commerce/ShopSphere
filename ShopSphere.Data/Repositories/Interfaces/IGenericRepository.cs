@@ -1,4 +1,5 @@
 ﻿using ShopSphere.Data;
+using ShopSphere.Data.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,14 @@ namespace ShopSphere.Data.Repositories.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IReadOnlyList<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(int id);
 
-
-        Task AddAsync(TEntity entity);
-        void Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task<IReadOnlyList<TEntity>> GetAllWihSpecAsync(IBaseSpecification<TEntity> spec);
+        Task<TEntity> GetByIdWihSpecAsync(IBaseSpecification<TEntity> spec);
+        Task CreateAsync(TEntity entity);
+        Task Update(int id ,TEntity entity);
+        Task Delete(int id);
 
     }
 }

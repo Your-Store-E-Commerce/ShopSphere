@@ -1,0 +1,199 @@
+﻿@model ShopSphere.Web.Models.Basket.CustomerBasketViewModel
+
+@{
+    ViewData["Title"] = "Basket";
+    decimal subtotal = Model.Items.Sum(item => item.Price * item.Quantity);
+    decimal shipping = 5.00m; // You can fetch this from your database or site settings
+    decimal total = subtotal + shipping;
+}
+
+<div class="container m-t-80">
+    <div class="bread-crumb flex-w p-l-15 p-r-15 p-t-15 p-lr-0-lg">
+        <a asp-controller="Home" asp-action="Index" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <span class="stext-109 cl4">Shop</span>
+    </div>
+</div>
+
+<div class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="wrap-table-shopping-cart">
+                    @if (Model.Items.Any())
+                    {
+                        <div style="overflow-x:auto;">
+                            <table class="table-shopping-cart" style="table-layout: fixed; max-width: 80%; overflow-x: hidden;">
+                                <thead>
+                                    <tr class="table_head">
+                                        <th class="column-1" style="width: 20%;">Product</th>
+                                        <th class="column-2" style="width: 25%;">Name</th>
+                                        <th class="column-3" style="width: 15%;">Price</th>
+                                        <th class="column-4" style="width: 15%;">Quantity</th>
+                                        <th class="column-5" style="width: 15%;">Total</th>
+                                        <th class="column-6" style="width: 10%;">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        var itemTotal = item.Price * item.Quantity;
+                                        <tr class="table_row">
+                                            <td class="column-1">
+                                                <div class="how-itemcart1">
+                                                    <img src="@item.PictureUrl" alt="@item.ProductName" class="img-thumbnail" style="max-width: 200px; height: auto;" />
+                                                </div>
+                                            </td>
+                                            <td class="column-2">
+                                                @item.ProductName
+                                                <div class="text-muted">@item.Type</div>
+                                            </td>
+                                            <td class="column-3">@item.Price.ToString("C")</td>
+                                            <td class="column-4">
+                                                <form asp-action="UpdateBasket" method="post" class="update-form">
+                                                    <input type="hidden" name="basketId" value="@Model.Id" />
+                                                    <input type="hidden" name="productId" value="@item.Id" />
+                                                    <div class="input-group">
+                                                        <input class="form-control text-center"
+                                                               type="number"
+                                                               name="quantity"
+                                                               value="@item.Quantity"
+                                                               min="1"
+                                                               max="100"
+                                                               onchange="this.form.submit()" />
+                                                    </div>
+                                                </form>
+                                            </td>
+                                            <td class="column-5">@itemTotal.ToString("C")</td>
+                                            <td class="column-6">
+                                                <form asp-action="RemoveFromBasket" method="post" class="remove-form" data-product-id="@item.Id">
+                                                    <input type="hidden" name="productId" value="@item.Id" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                            <div class="flex-w flex-m m-r-20 m-tb-5">
+                                <div class="flex-c-m stext-101 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+                                    <form asp-action="DeleteBasket" method="post" class="delete-basket-form">
+                                        <input type="hidden" name="basketId" value="@Model.Id" />
+                                        <button type="submit" style="background-color: transparent; border: none; color: black;">Delete Basket</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="flex-c-m stext-101 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                <a asp-controller="Products" asp-action="Index" style="color: black;">Update Basket</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center m-t-100">
+                            <h4>Your basket is empty</h4>
+                            <a asp-controller="Products" asp-action="Index" class="btn btn-success mt-3">Continue Shopping</a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            @if (Model.Items.Any())
+            {
+                <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+                    <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63">
+                        <h4 class="mtext-109 cl2 p-b-30">Cart Totals</h4>
+                        <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                            <div class="size-208 w-full-ssm">
+                                <span class="stext-110 cl2">Shipping:</span>
+                            </div>
+                            <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                                <p class="stext-111 cl6 p-t-2">
+                                    Standard shipping: @shipping.ToString("C")
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex-w flex-t p-t-27 p-b-33">
+                            <div class="size-208">
+                                <span class="mtext-101 cl2">Total:</span>
+                            </div>
+                            <div class="size-209 p-t-1">
+                                <span class="mtext-110 cl2">@total.ToString("C")</span>
+                            </div>
+                        </div>
+                        <a asp-controller="Orders" asp-action="Checkout"
+                           class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer text-success">
+                            Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Update basket when quantity is changed
+        $(document).ready(function () {
+            $('.update-form').on('submit', function (e) {
+                e.preventDefault();
+                $.post($(this).attr('action'), $(this).serialize(), function () {
+                    location.reload(); // إعادة تحميل الصفحة بعد التغيير
+                });
+            });
+
+            // Confirm item removal
+            $(document).on('submit', '.remove-form', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to undo this action!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete the item!',
+                    cancelButtonText: 'No, cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form[0].submit(); // تأكيد الحذف
+                    }
+                });
+            });
+
+            // Confirm basket deletion
+            $(document).on('submit', '.delete-basket-form', function (e) {
+                e.preventDefault(); // منع الإرسال التلقائي للنموذج
+
+                var form = $(this); // الحصول على النموذج
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "All items in the basket will be deleted!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete the basket!',
+                    cancelButtonText: 'No, cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form[0].submit(); // تأكيد الحذف
+                    }
+                });
+            });
+        });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}
