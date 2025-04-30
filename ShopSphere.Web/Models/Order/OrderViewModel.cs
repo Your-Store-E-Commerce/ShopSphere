@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopSphere.Web.Models.Order
 {
-   
-
-
 
     public class OrderViewModel
     {
@@ -14,6 +11,8 @@ namespace ShopSphere.Web.Models.Order
         public string ShippingAddress { get; set; }
 
         public int DeliveryMethodId { get; set; }
+
+        public decimal ShippingPrice { get; set; }
 
         [HiddenInput]
         public string BasketId { get; set; }
@@ -28,15 +27,20 @@ namespace ShopSphere.Web.Models.Order
 
 
 
-		[HiddenInput]
-		public string PaymentIntentId { get; set; }
+		//[HiddenInput]
+		//public string PaymentIntentId { get; set; }
 
-		[HiddenInput]
-		public string ClientSecret { get; set; }
+  //      [HiddenInput]
+  //      public string ClientSecret { get; set; }
 
-		[HiddenInput]
-		public string PublishKey { get; set; }
 
-	}
+        //// معلومات البطاقة
+        //public string CardNumber { get; set; } = null!;
+        //public string ExpiryDate { get; set; } = null!;
+        //public string CVC { get; set; } = null!;
+        //public string CardholderName { get; set; } = null!;
+        //public string Country { get; set; } = "Egypt";
+
+    }
 
 }

@@ -1,7 +1,4 @@
 ﻿
-
-
-
     @model ShopSphere.Web.Models.Order.OrderViewModel
 
 @{
@@ -9,7 +6,11 @@
 }
 
 <section class="section-slide mt-5 mb-5 pt-5 pb-5">
-    <form method="post">
+    <form asp-action="CreateOrder" asp-controller="Orders" method="post">
+
+
+    @Html.AntiForgeryToken()
+      
         <div class="container">
             <div class="card shadow">
                 <div class="card-header bg-dark text-light p-2">
@@ -27,44 +28,80 @@
                     <div class="container rounded p-2">
                         <div class="row">
                             <!-- Shipping Details -->
+             
+                                <!-- Shipping Details -->
                             <div class="col-12 col-lg-6 pb-4">
                                 <h4 class="mb-3 text-primary">Shipping Details:</h4>
 
+                                <!-- Full Name -->
                                 <div class="row my-1">
-                                    <div class="col-3">Name</div>
+                                    <div class="col-3">
+                                        <label asp-for="FullName" class="form-label"></label>
+                                    </div>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" value="الاء" readonly />
+                                        <input type="text" class="form-control" asp-for="FullName" />
                                     </div>
                                 </div>
 
+                                <!-- Phone -->
                                 <div class="row my-1">
-                                    <div class="col-3">Phone</div>
+                                    <div class="col-3">
+                                        <label asp-for="PhoneNumber" class="form-label"></label>
+                                    </div>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" value="01045108345" readonly />
+                                        <input type="text" class="form-control" asp-for="PhoneNumber" />
                                     </div>
                                 </div>
 
+                                <!-- Shipping Address -->
                                 <div class="row my-1">
-                                    <div class="col-3"> Address</div>
+                                    <div class="col-3">
+                                        <label asp-for="ShippingAddress" class="form-label"></label>
+                                    </div>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" value="cairo" readonly />
+                                        <input type="text" class="form-control" asp-for="ShippingAddress" />
                                     </div>
                                 </div>
 
+                                <!-- Buyer Email -->
                                 <div class="row my-1">
-                                    <div class="col-3"> City</div>
+                                    <div class="col-3">
+                                        <label asp-for="BuyerEmail" class="form-label"></label>
+                                    </div>
                                     <div class="col-9">
-                                        <input type="text" class="form-control" value="Egypt" readonly />
+                                        <input type="email" class="form-control" asp-for="BuyerEmail" />
                                     </div>
                                 </div>
 
+                                <!-- Delivery Method -->
                                 <div class="row my-1">
-                                    <div class="col-3">Email</div>
+                                    <div class="col-3">
+                                        <label asp-for="DeliveryMethodId" class="form-label"></label>
+                                    </div>
                                     <div class="col-9">
-                                        <input type="email" class="form-control" value="alaa@gmail.com" readonly />
+                                        <select asp-for="DeliveryMethodId" class="form-control">
+                                            <option value="">-- Select Delivery Method --</option>
+                                            @if (ViewBag.DeliveryMethods != null)
+                                            {
+                                                foreach (var method in ViewBag.DeliveryMethods)
+                                                {
+                                                    <option value="@method.Id">@method.ShortName - @method.Price.ToString("C")</option>
+                                                }
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+
+
+                       @*          <!-- Hidden Fields -->
+                                <input type="hidden" asp-for="BasketId" />
+                                <input type="hidden" asp-for="BuyerEmail" />
+                                <input type="hidden" asp-for="PaymentIntentId" />
+                                <input type="hidden" asp-for="ClientSecret" />
+                                <input type="hidden" asp-for="PublishKey" />  *@
+
+
 
                             <!-- Order Summary -->
                             <div class="col-12 col-lg-5 offset-lg-1">
@@ -100,14 +137,23 @@
 
                               
 
-                                <!-- Stripe Card Element -->
+                               @*  <!-- Stripe Card Element -->
                                 <div id="card-element"></div>
-                                <div id="card-errors" class="text-danger mt-2" role="alert"></div>
+                                <div id="card-errors" class="text-danger mt-2" role="alert"></div> *@
 
                                 <!-- زر يوجه لصفحة الدفع -->
-                                <a href="@Url.Action("Payment", "Payments")" class="btn btn-success px-4 text-white d-block text-center mt-5">
-                                    Payment Now
-                                </a>
+                             
+                                    <input type="hidden" asp-for="BasketId" />
+                                    <input type="hidden" asp-for="BuyerEmail" />
+                                    <input type="hidden" asp-for="FullName" />
+                                    <input type="hidden" asp-for="PhoneNumber" />
+                                    @* <input type="hidden" asp-for="ShippingAddress" /> *@
+                                    <input type="hidden" asp-for="DeliveryMethodId" />
+                                    <!-- باقي الحقول المخفية -->
+                                    <button type="submit" class="btn btn-success px-4 text-white d-block text-center mt-5">
+                                        Payment Now
+                                    </button>
+                                
 
 
 
@@ -118,7 +164,7 @@
                 </div>
             </div>
         </div>
-    </form>
+</form>
 </section>
 
 
@@ -128,7 +174,7 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-    var stripe = Stripe('@Model.PublishKey'); // استخدم الـ Publish Key من إعدادات Stripe
+        var stripe = Stripe(''); // استخدم الـ Publish Key من إعدادات Stripe
     var elements = stripe.elements();
     var card = elements.create('card');
     card.mount('#card-element');
@@ -146,7 +192,7 @@
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        stripe.confirmCardPayment('@Model.ClientSecret', {
+        stripe.confirmCardPayment( {
             payment_method: {
                 card: card,
                 billing_details: {

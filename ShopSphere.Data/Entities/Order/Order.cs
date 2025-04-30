@@ -22,12 +22,13 @@ namespace ShopSphere.Data.Entities.Order
             Subtotal = subtotal;
             PaymentIntentId = paymentIntentId;
         }
-
+        
 
         public string BuyerEmail { get; set; } = null!;
         public string ShippingAddress { get; set; } = null!;
 
         public DeliveryMethod? DeliveryMethod { get; set; } = null!;
+        
 
         public OrderStatus orderStatus { get; set; } = OrderStatus.Pending;
 

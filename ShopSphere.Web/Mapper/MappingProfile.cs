@@ -21,8 +21,9 @@ namespace ShopSphere.Web.Mapper
             CreateMap<BasketItem, BasketItemViewModel>().ReverseMap();
             CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
             
-            CreateMap<OrderItem, OrderItemViewModel>();
-            CreateMap<Order, OrderToReturnViewModel>();
+            CreateMap<OrderItem, OrderItemViewModel>().ReverseMap();
+            CreateMap<Order, OrderViewModel>()
+                .ForMember(dest=>dest.ShippingPrice ,opt=>opt.MapFrom(src=>src.DeliveryMethod.Price)).ReverseMap();
 
             CreateMap<ProductType, ProductTypeViewModel>()
              .ForMember(dest => dest.TypeId, opt => opt.MapFrom(src => src.Id))

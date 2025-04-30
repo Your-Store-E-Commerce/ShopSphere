@@ -19,7 +19,7 @@ namespace ShopSphere.Data.Context
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-			base.OnModelCreating(modelBuilder); // This line is CRUCIAL for Identity
+			base.OnModelCreating(modelBuilder); 
 			modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 		}
         public DbSet<Product> Products { get; set; }

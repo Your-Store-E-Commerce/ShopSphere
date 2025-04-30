@@ -52,6 +52,7 @@ namespace ShopSphere.Services.Implementations
                 }
             }
 
+      
 
             //3.Calculate SubTotal
 
@@ -117,15 +118,12 @@ namespace ShopSphere.Services.Implementations
 
         }
 
-        //public Task<Order> GetOrderForUserById(int orderId, string BuyerEmail)
-        //{
-        //    var orderRepo = _unitOfWork.Repository<Order>();
+        public async Task<Order?> GetOrderByIdAsync(int orderId)
+        {
+            return await _unitOfWork.Repository<Order>().GetByIdAsync(orderId);
+        }
 
-        //    var spec = new OrderSpecification(orderId, BuyerEmail);
+      
 
-        //    var order = orderRepo.GetByIdWihSpecAsync(spec);
-
-        //    return order;
-        //}
     }
 }

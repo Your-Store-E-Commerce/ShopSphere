@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using ShopSphere.Data.Entities.Order;
 using ShopSphere.Services.Implementations;
 using ShopSphere.Services.Interfaces;
 using ShopSphere.Web.Models.Order;
-using System.Net;
+using Stripe;
 using System.Security.Claims;
 
 namespace ShopSphere.Web.Controllers
@@ -17,23 +15,23 @@ namespace ShopSphere.Web.Controllers
         private readonly IOrderServices _orderServices;
         private readonly IMapper _mapper;
         private readonly IBasketServices _basketServices;
+        private readonly IPaymentServices _paymentServices;
 
         [BindProperty]
         public OrderViewModel OrderVM { get; set; }
 
-        public OrdersController(IOrderServices orderServices, IMapper mapper,IBasketServices basketServices)
+        public OrdersController(IOrderServices orderServices, IMapper mapper, IBasketServices basketServices ,IPaymentServices paymentServices  )
         {
             _orderServices = orderServices;
             _mapper = mapper;
-           _basketServices = basketServices;
+            _basketServices = basketServices;
+            _paymentServices = paymentServices;
         }
 
-		public IActionResult Index()
-		{
-			return View();
-		}
-
-
+        public IActionResult Index()
+        {
+            return View();
+        }
 
 
         [HttpGet]
@@ -45,9 +43,14 @@ namespace ShopSphere.Web.Controllers
             if (basket == null)
                 return RedirectToAction("Index", "Basket");
 
+            // ✅ إنشاء الـ PaymentIntent
+            var paymentIntent = await _paymentServices.CrateOrUpdatePaymentIntent(basketId);
+
+            // ✅ تحميل طرق التوصيل
             var deliveryMethods = await _orderServices.GetDeliveryMethod();
             ViewBag.DeliveryMethods = deliveryMethods;
 
+            // ✅ إعداد عناصر الطلب
             var items = basket.Items.Select(i => new OrderItemViewModel
             {
                 Id = i.Id,
@@ -55,18 +58,24 @@ namespace ShopSphere.Web.Controllers
                 ProductName = i.ProductName,
                 ProductPictureUrl = i.PictureUrl,
                 Price = i.Price,
-                Quantity = i.Quantity
+                Quantity = i.Quantity ,
+                
             }).ToList();
 
             var subtotal = items.Sum(x => x.Price * x.Quantity);
 
+
+            // ✅ تجهيز الـ ViewModel وإضافة معلومات الدفع
+       
             var orderVM = new OrderViewModel
             {
                 BuyerEmail = "testuser@example.com",
                 BasketId = basketId,
                 Items = items,
                 Subtotal = subtotal,
-                Total = subtotal 
+                Total = subtotal,
+         
+
             };
 
             return View(orderVM);
@@ -74,31 +83,30 @@ namespace ShopSphere.Web.Controllers
 
 
 
-
-
-        // POST: /Orders/CreateOrder
         [HttpPost]
-        
-        public async Task<IActionResult> CreateOrder()
+        public async Task<IActionResult> CreateOrder(OrderViewModel orderVM)
         {
-            //var email = User.FindFirstValue(ClaimTypes.Email);
+            var deliveryMethods = await _orderServices.GetDeliveryMethod();
+            ViewBag.DeliveryMethods = deliveryMethods;
 
             if (!ModelState.IsValid)
-            {
-                var deliveryMethods = await _orderServices.GetDeliveryMethod();
-                ViewBag.DeliveryMethods = deliveryMethods;
-                return View("Checkout", OrderVM);
-            }
+                return View("Checkout", orderVM);  // خلي بالك من استخدام orderVM هنا بدل OrderVM
 
-            var createdOrder = await _orderServices.CreateOrderAsync(OrderVM.BasketId, OrderVM.DeliveryMethodId,  OrderVM.BuyerEmail, OrderVM.ShippingAddress);
+            var createdOrder = await _orderServices.CreateOrderAsync(
+                orderVM.BasketId,
+                orderVM.DeliveryMethodId,
+                orderVM.BuyerEmail,
+                orderVM.ShippingAddress);
 
             if (createdOrder is null)
                 return BadRequest("Problem creating order");
 
             var mappedOrder = _mapper.Map<Order, OrderToReturnViewModel>(createdOrder);
 
-            // Redirect to Payment page after creating the order
-            return RedirectToAction("Payment", "Payments", new { paymentIntentId = mappedOrder.PaymentIntentId });
+            return RedirectToAction("Payment", "Payments", new
+            {
+                shippingAddress = orderVM.ShippingAddress
+            });
         }
 
         // GET: /Orders/Details/{id}
