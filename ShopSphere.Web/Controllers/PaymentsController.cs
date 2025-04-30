@@ -61,15 +61,6 @@ namespace ShopSphere.Controllers
 		}
 
 
-
-
-
-
-
-
-
-
-
 		[HttpPost]
         public async Task<IActionResult> UpdateOrderStatus(string paymentIntentId, bool isPaid)
         {
@@ -84,7 +75,7 @@ namespace ShopSphere.Controllers
                 return NotFound("Order not found.");
             }
 
-            return RedirectToAction("OrderDetails", "Order", new { orderId = order.Id });
+            return RedirectToAction("OrderDetails", "Orders", new { orderId = order.Id });
         }
     }
 }
