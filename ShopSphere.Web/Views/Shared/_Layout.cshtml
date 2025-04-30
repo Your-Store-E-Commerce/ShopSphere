@@ -43,12 +43,13 @@
 
 
 
-	
 
 
-	
 
-	
+
+
+	@RenderSection("Styles", required: false)
+
 </head>
 <body class="animsition">
 
@@ -122,7 +123,7 @@
 
 						
 							<a asp-controller="Basket" asp-action="Index"
-							   class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+						   class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti  @(ViewContext.RouteData.Values["controller"]?.ToString() == "Wishlist" ? "active-menu" : "" )"
 							   data-notify="@basketCount">
 								<i class="zmdi zmdi-shopping-cart-add"></i>
 							</a>
@@ -441,10 +442,20 @@
 				$(this).addClass('active-icon');
 			});
 		});
+
+		$(document).ready(function () {
+			$('.update-form').on('submit', function (e) {
+				e.preventDefault();
+				$.post($(this).attr('action'), $(this).serialize(), function () {
+					location.reload(); // إعادة تحميل الصفحة بعد التغيير
+				});
+			});
 	</script>
 
 	<!-- Section for additional scripts (optional) -->
 	@await RenderSectionAsync("Scripts", required: false)
+
+
 
 
 

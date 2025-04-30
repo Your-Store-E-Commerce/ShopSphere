@@ -1,48 +1,174 @@
-﻿@model ShopSphere.Web.Models.Order.OrderViewModel
+﻿
+
+
+
+    @model ShopSphere.Web.Models.Order.OrderViewModel
 
 @{
     ViewData["Title"] = "Checkout";
 }
 
-<form asp-action="CreateOrder" asp-controller="Orders" method="post" style="margin-top: 80px;">
-    <input asp-for="BasketId" type="hidden" />
-    <input asp-for="BuyerEmail" type="hidden" />
+<section class="section-slide mt-5 mb-5 pt-5 pb-5">
+    <form method="post">
+        <div class="container">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-light p-2">
+                    <div class="row">
+                        <div class="col-12 col-md-6 pb-1">
+                            <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                        </div>
+                        <div class="col-12 col-md-4 offset-md-2 text-end">
+                            <a asp-controller="Basket" asp-action="Index" class="btn btn-outline-info btn-sm">Back to ShippingCart</a>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <label asp-for="FullName"></label>
-        <input asp-for="FullName" class="form-control" />
-        <span asp-validation-for="FullName" class="text-danger"></span>
-    </div>
+                <div class="card-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <!-- Shipping Details -->
+                            <div class="col-12 col-lg-6 pb-4">
+                                <h4 class="mb-3 text-primary">Shipping Details:</h4>
 
-    <div class="form-group">
-        <label asp-for="PhoneNumber"></label>
-        <input asp-for="PhoneNumber" class="form-control" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Name</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" value="الاء" readonly />
+                                    </div>
+                                </div>
 
-    <div class="form-group">
-        <label asp-for="ShippingAddress"></label>
-        <textarea asp-for="ShippingAddress" class="form-control"></textarea>
-        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
-    </div>
+                                <div class="row my-1">
+                                    <div class="col-3">Phone</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" value="01045108345" readonly />
+                                    </div>
+                                </div>
 
-    
-        <div class="form-group mb-4">
-            <label asp-for="DeliveryMethodId" class="form-label"></label>
-            <select asp-for="DeliveryMethodId" class="form-control">
-                <option value="">-- Select Delivery Method --</option>
-                @if (ViewBag.DeliveryMethods != null)
-                {
-                    foreach (var method in ViewBag.DeliveryMethods)
-                    {
-                        <option value="@method.Id">@method.ShortName - @method.Price.ToString("C")</option>
-                    }
-                }
-            </select>
-            <span asp-validation-for="DeliveryMethodId" class="text-danger"></span>
+                                <div class="row my-1">
+                                    <div class="col-3"> Address</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" value="cairo" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3"> City</div>
+                                    <div class="col-9">
+                                        <input type="text" class="form-control" value="Egypt" readonly />
+                                    </div>
+                                </div>
+
+                                <div class="row my-1">
+                                    <div class="col-3">Email</div>
+                                    <div class="col-9">
+                                        <input type="email" class="form-control" value="alaa@gmail.com" readonly />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Order Summary -->
+                            <div class="col-12 col-lg-5 offset-lg-1">
+                                <h4 class="mb-3 text-primary">Order Summary</h4>
+
+                                <ul class="list-group mb-3">
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between p-2">
+                                            <div class="row container">
+                                                <div class="col-8">
+                                                    <h6 class="my-0 text-primary">@item.ProductName</h6>
+                                                    <small class="text-muted">Quantity: @item.Quantity</small>
+                                                </div>
+                                                <div class="col-4 text-end">
+                                                    <p class="text-success">@((item.Price * item.Quantity).ToString("C"))</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+
+                                    <li class="list-group-item bg-primary">
+                                        <div class="row container">
+                                            <div class="col-6">
+                                                <h5 class="text-white">TOTAL</h5>
+                                            </div>
+                                            <div class="col-6 text-end">
+                                                <h5 class="text-white">@Model.Total.ToString("C")</h5>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                              
+
+                                <!-- Stripe Card Element -->
+                                <div id="card-element"></div>
+                                <div id="card-errors" class="text-danger mt-2" role="alert"></div>
+
+                                <!-- زر يوجه لصفحة الدفع -->
+                                <a href="@Url.Action("Payment", "Payments")" class="btn btn-success px-4 text-white d-block text-center mt-5">
+                                    Payment Now
+                                </a>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </form>
+</section>
 
 
-    <button type="submit" class="btn btn-primary">Place Order</button>
-</form>
+
+
+  @section Scripts {
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+    var stripe = Stripe('@Model.PublishKey'); // استخدم الـ Publish Key من إعدادات Stripe
+    var elements = stripe.elements();
+    var card = elements.create('card');
+    card.mount('#card-element');
+
+    card.addEventListener('change', function (event) {
+        var displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    var form = document.getElementById('stripe-form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        stripe.confirmCardPayment('@Model.ClientSecret', {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: '@Model.FullName',
+                    email: '@Model.BuyerEmail'
+                }
+            }
+        }).then(function (result) {
+            if (result.error) {
+                document.getElementById('card-errors').textContent = result.error.message;
+            } else {
+                if (result.paymentIntent.status === 'succeeded') {
+                    // ممكن هنا تبعت البيانات للسيرفر لتأكيد الطلب مثلاً
+                    form.submit(); // أو AJAX حسب اختيارك
+                }
+            }
+        });
+    });
+</script>
+}
+
+
+
+
 

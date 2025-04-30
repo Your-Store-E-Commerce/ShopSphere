@@ -111,6 +111,11 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 
 
+.checkout-section {
+    margin-top: 100px; /* „”«›… „‰ «·‹ navbar */
+    margin-bottom: 100px; /* „”«›… ﬁ»· «·‹ footer */
+    padding: 20px;
+}
 
 
 
